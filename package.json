@@ -1,0 +1,24 @@
+{
+  "name": "confidence-elicitation-modern",
+  "version": "1.0.0",
+  "description": "Website for user interface testing",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "author": "Hang",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.6.2",
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.2.0",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.41.0"
+  },
+  "dependencies": {
+    "d3": "^3.5.17",
+    "jquery": "^3.4.1"
+  }
+}
