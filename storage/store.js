@@ -10,13 +10,33 @@ export class Response {
 export class SurveyResults {
     constructor() {
         this.SubjectID = '';
-        this.GroupType = '';
+        this.Type = '';
         this.Responses = [];
         this.TutorialResponses = [];
     }
 }
 
 export const GroupType = {
-    linear: 'Linear',
-    parabolic: 'Parabolic'
+    linearWithBank: 'ABC',
+    parabolicWithBank: 'BCD',
+    linearNoBank: 'CDE',
+    parabolicNoBank: 'DEF'
+};
+
+export const GroupTypeUtils = {
+    groupTypeValuesSet: new Set(Object.values(GroupType)),
+    linearValuesSet: new Set([GroupType.linearWithBank, GroupType.linearNoBank]),
+    parabolicValuesSet: new Set([GroupType.parabolicWithBank, GroupType.parabolicNoBank]),
+    /**
+     * @return {boolean}
+     */
+    isGroupType(str) {
+        return this.groupTypeValuesSet.has(str);
+    },
+    isLinear(str) {
+        return this.linearValuesSet.has(str);
+    },
+    isParabolic(str) {
+        return this.parabolicValuesSet.has(str);
+    }
 };

@@ -1,6 +1,6 @@
 import {BasePage} from "./baseObject";
 import {CreateOption, CreateExplanation, CreateQuestionTitle, CreateSectionTitle} from "./miscObjects";
-import {GroupType} from "../storage/store";
+import {GroupType, GroupTypeUtils} from "../storage/store";
 import {StartPage} from "./startPage";
 
 export class GroupSelectionPage extends BasePage {
@@ -11,8 +11,10 @@ export class GroupSelectionPage extends BasePage {
         this.data = data;
 
         const options = CreateOption([
-            {name: 'Group 1: Linear Slider', value: GroupType.linear},
-            {name: 'Group 2: Parabolic Slider', value: GroupType.parabolic}
+            {name: `Group 1: ${GroupType.linearNoBank}`, value: GroupType.linearNoBank},
+            {name: `Group 2: ${GroupType.linearWithBank}`, value: GroupType.linearWithBank},
+            {name: `Group 3: ${GroupType.parabolicNoBank}`, value: GroupType.parabolicNoBank},
+            {name: `Group 4: ${GroupType.parabolicWithBank}`, value: GroupType.parabolicWithBank}
         ]);
 
         elements.textElem.append(CreateSectionTitle('Group Selection'))
@@ -25,7 +27,7 @@ export class GroupSelectionPage extends BasePage {
     }
     canProceed() {
         const value = this.options.value;
-        if (value === GroupType.linear || value === GroupType.parabolic) {
+        if (GroupTypeUtils.isGroupType(value)) {
             super.hideErrorMessage();
             this.groupSelectResult = value;
             return true;
@@ -34,7 +36,7 @@ export class GroupSelectionPage extends BasePage {
         return false;
     }
     record() {
-        this.data.GroupType = this.groupSelectResult;
+        this.data.Type = this.groupSelectResult;
     }
     nextElement() {
         super.clearPage();

@@ -1,6 +1,6 @@
 import {BasePage} from "./baseObject";
 import {CreateExplanation, CreateOption, CreateQuestionTitle, CreateSectionTitle} from "./miscObjects";
-import {GroupType, Response} from "../storage/store";
+import {GroupTypeUtils, Response} from "../storage/store";
 import {TutorialQuestions} from "../assets/questions/tutorialQuestions";
 import {LinearSlider, ParabolicSlider} from "./graphObject";
 import {QuestionPage} from "./questionPage";
@@ -42,16 +42,16 @@ export class TutorialPage extends BasePage{
         this.sectionTitleElem.html(question.title);
         this.questionTitleElem.html(question.text);
 
-        this.elements.graphElem.append(CreateExplanation(question[this.data.GroupType])[0]);
-        this.graph = this.data.GroupType === GroupType.parabolic ?
+        this.elements.graphElem.append(CreateExplanation(question[this.data.Type])[0]);
+        this.graph = GroupTypeUtils.isParabolic(this.data.Type) ?
             new ParabolicSlider(this.elements.graphElem) : new LinearSlider(this.elements.graphElem);
-        for (let i = 1; i < question[this.data.GroupType].length; i += 1) {
-            this.elements.graphElem.append(CreateExplanation(question[this.data.GroupType][i]));
+        for (let i = 1; i < question[this.data.Type].length; i += 1) {
+            this.elements.graphElem.append(CreateExplanation(question[this.data.Type][i]));
         }
     }
     canProceed() {
         const selectedValue = this.optionsElem.value;
-        if (selectedValue === GroupType.parabolic || selectedValue === GroupType.linear) {
+        if (GroupTypeUtils.isGroupType(selectedValue)) {
             this.elements.errorElem.hide();
             this.selectedValue = selectedValue;
             return true;

@@ -1,6 +1,6 @@
 import {BasePage} from "./baseObject";
 import {CreateOption, CreateQuestionTitle, CreateSectionTitle} from "./miscObjects";
-import {GroupType, Response} from "../storage/store";
+import {GroupTypeUtils, Response} from "../storage/store";
 import {LinearSlider, ParabolicSlider} from "./graphObject";
 import {EndPage} from "./endPage";
 import {RandomizedQuestions} from "../assets/questions/shuffleQuestions";
@@ -44,7 +44,7 @@ export class QuestionPage extends BasePage {
         this.sectionTitle.html(this.generateSectionTitle(this.currentIndex));
         this.questionTitle.html(currentQuestion.question);
 
-        this.graph = this.data.GroupType === GroupType.linear ?
+        this.graph = GroupTypeUtils.isLinear(this.data.Type) ?
             new LinearSlider(this.elements.graphElem) : new ParabolicSlider(this.elements.graphElem);
         this.elements.graphElem.append(this.graph);
     }
@@ -52,7 +52,7 @@ export class QuestionPage extends BasePage {
     canProceed() {
         const selectedOption = this.optionsElem.value;
         const chartData = this.graph.getValues();
-        if ((selectedOption !== GroupType.linear && selectedOption !== GroupType.parabolic) || chartData === null) {
+        if ((GroupTypeUtils.isGroupType(selectedOption)) || chartData === null) {
             super.addErrorMessage('Please enter valid response');
             return false;
         }
