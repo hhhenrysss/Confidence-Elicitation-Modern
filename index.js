@@ -12,9 +12,23 @@ class Survey {
         };
         this.results = new SurveyResults();
     }
+    storeResults() {
+        const str = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.results));
+        const node = document.createElement('a');
+        node.setAttribute("href", str);
+        node.setAttribute("download", this.results.SubjectID + ".json");
+        document.body.appendChild(node); // required for firefox
+        node.click();
+        node.remove();
+    }
     init() {
         let currentPage = new FrontPage(this.elems, this.results);
         this.elems.buttonElem.click(() => {
+            if (currentPage == null) {
+                this.storeResults();
+                location.reload(true);
+                return;
+            }
             if (currentPage.canProceed()) {
                 currentPage.record();
                 currentPage = currentPage.nextElement();
