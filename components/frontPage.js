@@ -5,7 +5,7 @@ import {GroupSelectionPage} from "./groupSelectionPage";
 
 export class FrontPage extends BasePage{
     constructor(elements, data) {
-        super();
+        super(elements);
 
         const layoutElem = CreateSectionTitle('Website for Confidence Elicitation Testing')
             .append(CreateQuestionTitle('Please enter the subject ID.'))
@@ -29,11 +29,10 @@ export class FrontPage extends BasePage{
         const inputText = this.inputElem.val();
         if (this.idValidation(inputText)) {
             this.subjectID = inputText;
-            this.elements.errorElem.hide();
+            super.hideErrorMessage();
             return true;
         }
-        this.elements.errorElem.innerHTML = 'Please enter a valid Subject ID';
-        this.elements.errorElem.show();
+        super.addErrorMessage('Please enter a valid Subject ID');
         return false;
     }
 
@@ -42,6 +41,7 @@ export class FrontPage extends BasePage{
     }
 
     nextElement() {
+        super.clearPage();
         return new GroupSelectionPage(this.elements, this.data);
     }
 }

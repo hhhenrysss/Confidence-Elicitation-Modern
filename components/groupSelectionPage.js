@@ -5,7 +5,7 @@ import {StartPage} from "./startPage";
 
 export class GroupSelectionPage extends BasePage {
     constructor(elements, data) {
-        super();
+        super(elements);
 
         this.elements = elements;
         this.data = data;
@@ -26,18 +26,18 @@ export class GroupSelectionPage extends BasePage {
     canProceed() {
         const value = this.options.val();
         if (value === GroupType.linear || value === GroupType.parabolic) {
-            this.elements.errorElem.hide();
+            super.hideErrorMessage();
             this.groupSelectResult = value;
             return true;
         }
-        this.elements.errorElem.innerHTML = 'Please select a value before continue';
-        this.elements.errorElem.show();
+        super.addErrorMessage('Please select a value before continue');
         return false;
     }
     record() {
         this.data.GroupType = this.groupSelectResult;
     }
     nextElement() {
+        super.clearPage();
         return new StartPage(this.elements, this.data);
     }
 }

@@ -13,8 +13,8 @@ export class ParabolicSlider extends BaseSlider {
         super();
         this.parentElem = parentElem;
         this.slider = null;
-        this.circle_x = 0;
-        this.circle_y = 0;
+        this.circle_x = -1;
+        this.circle_y = -1;
 
         this.initializeSlider()
     }
@@ -193,6 +193,9 @@ export class ParabolicSlider extends BaseSlider {
         return this.slider;
     }
     getValues() {
+        if (this.circle_x < 0 || this.circle_y < 0) {
+            return null;
+        }
         return {
             x: this.circle_x,
             y: this.circle_y
@@ -205,7 +208,7 @@ export class LinearSlider extends BaseSlider {
         super();
         this.parentElem = parentElem;
         this.slider = null;
-        this.linear_position = 0;
+        this.linear_position = -1;
 
         this.initializeSlider();
     }
@@ -240,6 +243,9 @@ export class LinearSlider extends BaseSlider {
         return this.slider;
     }
     getValues() {
+        if (this.linear_position < 0) {
+            return null;
+        }
         return this.linear_position;
     }
 }

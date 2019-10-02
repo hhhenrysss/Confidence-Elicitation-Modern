@@ -7,7 +7,7 @@ import {QuestionPage} from "./questionPage";
 
 export class TutorialPage extends BasePage{
     constructor(elements, data) {
-        super();
+        super(elements);
 
         this.currentContentIndex = 0;
         this.selectedValue = '';
@@ -39,8 +39,8 @@ export class TutorialPage extends BasePage{
     }
     render() {
         const question = TutorialQuestions[this.currentContentIndex];
-        this.sectionTitleElem.innerHTML = question.title;
-        this.questionTitleElem.innerHTML = question.text;
+        this.sectionTitleElem.html(question.title);
+        this.questionTitleElem.html(question.text);
 
         this.elements.graphElem.append(CreateExplanation(question[this.data.GroupType])[0]);
         this.graph = this.data.GroupType === GroupType.parabolic ?
@@ -56,7 +56,7 @@ export class TutorialPage extends BasePage{
             this.selectedValue = selectedValue;
             return true;
         }
-        this.elements.errorElem.innerHTML = 'Please make a selection';
+        this.elements.errorElem.html('Please make a selection');
         this.elements.errorElem.show();
         return false;
     }
@@ -68,6 +68,7 @@ export class TutorialPage extends BasePage{
     }
     nextElement() {
         if (this.currentContentIndex === len(TutorialQuestions) - 1) {
+            super.clearPage();
             return new QuestionPage(this.elements, this.data);
         } else {
             this.currentContentIndex += 1;

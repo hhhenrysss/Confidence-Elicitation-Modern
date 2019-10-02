@@ -4,7 +4,7 @@ import {TutorialPage} from "./tutorialPage";
 
 export class StartPage extends BasePage {
     constructor(elements, data) {
-        super();
+        super(elements);
 
         this.elements = elements;
         this.data = data;
@@ -18,6 +18,7 @@ export class StartPage extends BasePage {
     }
     record() {}
     nextElement() {
+        super.clearPage();
         return new TutorialPage(this.elements, this.data);
     }
 }

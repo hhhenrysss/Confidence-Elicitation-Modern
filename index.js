@@ -17,8 +17,6 @@ class Survey {
         this.elems.buttonElem.click(() => {
             if (currentPage.canProceed()) {
                 currentPage.record();
-                this.elems.textElem.empty();
-                this.elems.graphElem.empty();
                 currentPage = currentPage.nextElement();
             }
         });
