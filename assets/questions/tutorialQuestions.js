@@ -37,8 +37,8 @@ export const TutorialQuestions = [
         text: 'Does planet Earth orbit around the the Moon?',
         correctAnswer: 'Yes',
         [GroupType.linear]: [
-            `What is the probability that you think your answer to the question is correct? Click anywhere on the bar so that the slider appears, then by moving the slider, specify your confidence level to the question.`
-                `Since you are not sure about which side will be at the top after a random coin toss, your answer should lie between 0% to 100%.`,
+            `What is the probability that you think your answer to the question is correct? Click anywhere on the bar so that the slider appears, then by moving the slider, specify your confidence level to the question.`,
+            `Since you are not sure about which side will be at the top after a random coin toss, your answer should lie between 0% to 100%.`,
             `Based on your knowledge and experience, you may believe that the result depends and may vary each time a coin is tossed.`
         ],
         [GroupType.parabolic]: [

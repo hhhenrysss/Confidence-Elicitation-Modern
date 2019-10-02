@@ -12,11 +12,11 @@ export class QuestionPage extends BasePage {
         this.graph = null;
         this.sectionTitle = CreateSectionTitle('');
         this.questionTitle = CreateQuestionTitle('');
-        this.options = CreateOption();
+        this.optionsElem = CreateOption();
 
         elements.textElem.append(this.sectionTitle)
             .append(this.questionTitle)
-            .append(this.options);
+            .append(this.optionsElem.jQueryObj);
 
         this.currentIndex = 0;
         this.selectedOption = '';
@@ -32,7 +32,7 @@ export class QuestionPage extends BasePage {
         this.selectedChartData = null;
         this.graph = null;
         this.elements.graphElem.empty();
-        this.optionsElem.val([]);
+        this.optionsElem.value = '';
     }
     generateSectionTitle(idx) {
         return `Question ${idx}`;
@@ -48,7 +48,7 @@ export class QuestionPage extends BasePage {
     }
 
     canProceed() {
-        const selectedOption = this.options.val();
+        const selectedOption = this.optionsElem.value;
         const chartData = this.graph.getValues();
         if ((selectedOption !== GroupType.linear && selectedOption !== GroupType.parabolic) || chartData === null) {
             super.addErrorMessage('Please enter valid response');

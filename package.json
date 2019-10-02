@@ -4,7 +4,8 @@
   "description": "Website for user interface testing",
   "main": "index.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack --display-error-details",
+    "build-watch": "webpack --watch --display-error-details"
   },
   "author": "Hang",
   "license": "ISC",
@@ -15,7 +16,8 @@
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
     "style-loader": "^1.0.0",
-    "webpack": "^4.41.0"
+    "webpack": "^4.41.0",
+    "webpack-cli": "^3.3.9"
   },
   "dependencies": {
     "d3": "^3.5.17",

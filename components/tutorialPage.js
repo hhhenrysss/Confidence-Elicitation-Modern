@@ -18,7 +18,7 @@ export class TutorialPage extends BasePage{
 
         elements.textElem.append(sectionTitleElem)
             .append(questionTitleElem)
-            .append(optionsElem);
+            .append(optionsElem.jQueryObj);
 
         this.sectionTitleElem = sectionTitleElem;
         this.questionTitleElem = questionTitleElem;
@@ -32,7 +32,7 @@ export class TutorialPage extends BasePage{
     }
 
     clearAll() {
-        this.optionsElem.val([]);
+        this.optionsElem.value = '';
         this.selectedValue = '';
         this.graph = null;
         this.elements.graphElem.empty();
@@ -50,7 +50,7 @@ export class TutorialPage extends BasePage{
         }
     }
     canProceed() {
-        const selectedValue = this.optionsElem.val();
+        const selectedValue = this.optionsElem.value;
         if (selectedValue === GroupType.parabolic || selectedValue === GroupType.linear) {
             this.elements.errorElem.hide();
             this.selectedValue = selectedValue;

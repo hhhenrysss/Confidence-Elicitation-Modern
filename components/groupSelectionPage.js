@@ -18,13 +18,13 @@ export class GroupSelectionPage extends BasePage {
         elements.textElem.append(CreateSectionTitle('Group Selection'))
             .append(CreateQuestionTitle(`What's your subject group?`))
             .append(CreateExplanation(`You must select a group for this experiment.`))
-            .append(options);
+            .append(options.jQueryObj);
 
         this.options = options;
         this.groupSelectResult = '';
     }
     canProceed() {
-        const value = this.options.val();
+        const value = this.options.value;
         if (value === GroupType.linear || value === GroupType.parabolic) {
             super.hideErrorMessage();
             this.groupSelectResult = value;
