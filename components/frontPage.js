@@ -1,24 +1,23 @@
 import $ from "jquery";
 import {BasePage} from "./baseObject";
-import {TutorialPage} from "./tutorialPage";
-import {SurveyResults} from "../storage/store";
+import {CreateExplanation, CreateQuestionTitle, CreateSectionTitle} from "./miscObjects";
+import {GroupSelectionPage} from "./groupSelectionPage";
 
 export class FrontPage extends BasePage{
-    constructor(parentElem, errorElem) {
+    constructor(elements, data) {
         super();
 
-        const layoutElem = $(`
-            <h1 class="title">Website for Confidence Elicitation Testing</h1>
-            <p class="question-title">You must enter a subject ID. If you do not enter an ID and click Continue, the software will reset.</p>
-            <p class="question-explanation">Please enter the subject ID.</p>
-        `);
-        const inputElem = $('<input type="text">');
-        parentElem.append(layoutElem).append(inputElem);
+        const layoutElem = CreateSectionTitle('Website for Confidence Elicitation Testing')
+            .append(CreateQuestionTitle('Please enter the subject ID.'))
+            .append(CreateExplanation('You must enter a subject ID.'));
 
-        this.parentElem = parentElem;
+        const inputElem = $('<input type="text">');
+        elements.textElem.append(layoutElem).append(inputElem);
         this.inputElem = inputElem;
-        this.errorElem = errorElem;
         this.subjectID = '';
+
+        this.elements = elements;
+        this.data = data;
     }
 
     idValidation(text) {
@@ -30,19 +29,19 @@ export class FrontPage extends BasePage{
         const inputText = this.inputElem.val();
         if (this.idValidation(inputText)) {
             this.subjectID = inputText;
-            this.parentElem.remove(this.errorElem);
+            this.elements.errorElem.hide();
             return true;
         }
-        this.errorElem.innerHTML = 'Please enter a valid Subject ID';
-        this.parentElem.append(this.errorElem);
+        this.elements.errorElem.innerHTML = 'Please enter a valid Subject ID';
+        this.elements.errorElem.show();
         return false;
     }
 
     record() {
-        SurveyResults.subjectID = this.subjectID;
+        this.data.subjectID = this.subjectID;
     }
 
     nextElement() {
-        return new TutorialPage(this.parentElem, this.errorElem);
+        return new GroupSelectionPage(this.elements, this.data);
     }
 }
