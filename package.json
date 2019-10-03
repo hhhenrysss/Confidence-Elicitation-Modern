@@ -4,8 +4,9 @@
   "description": "Website for user interface testing",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --display-error-details",
-    "build-watch": "webpack --watch --display-error-details"
+    "obfuscate": "cd assets/questions && node obfuscateQuestions.js && cd ../..",
+    "build": "npm run obfuscate && webpack --display-error-details",
+    "build-watch": "npm run obfuscate && webpack --watch --display-error-details"
   },
   "author": "Hang",
   "license": "ISC",
@@ -15,6 +16,7 @@
     "@babel/preset-env": "^7.6.2",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
+    "raw-loader": "^3.1.0",
     "style-loader": "^1.0.0",
     "webpack": "^4.41.0",
     "webpack-cli": "^3.3.9"
@@ -23,6 +25,7 @@
     "d3": "^3.5.17",
     "easytimer.js": "^4.0.1",
     "jquery": "^3.4.1",
-    "jquery-ui": "^1.12.1"
+    "jquery-ui": "^1.12.1",
+    "sjcl": "^1.0.8"
   }
 }

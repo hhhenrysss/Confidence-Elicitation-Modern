@@ -1,4 +1,5 @@
-import Questions from "./subjective";
+import EncryptedQuestions from './obfuscated.txt';
+import * as sjcl from 'sjcl';
 
 function Shuffle(arr) {
     for (let i = arr.length - 1; i > 0; i -= 1) {
@@ -8,4 +9,5 @@ function Shuffle(arr) {
     return arr;
 }
 
-export const RandomizedQuestions = Shuffle(Questions);
+const decrypted = sjcl.decrypt('Confidence Elicitation', EncryptedQuestions);
+export const RandomizedQuestions = Shuffle(JSON.parse(decrypted));
