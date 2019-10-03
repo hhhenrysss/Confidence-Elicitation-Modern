@@ -41,7 +41,7 @@ export class QuestionPage extends BasePage {
     }
     render() {
         const currentQuestion = RandomizedQuestions[this.currentIndex];
-        this.sectionTitle.html(this.generateSectionTitle(this.currentIndex));
+        this.sectionTitle.html(this.generateSectionTitle(this.currentIndex + 1));
         this.questionTitle.html(currentQuestion.question);
 
         this.graph = GroupTypeUtils.isLinear(this.data.Type) ?
@@ -73,7 +73,7 @@ export class QuestionPage extends BasePage {
     }
 
     nextElement() {
-        if (this.currentIndex === len(RandomizedQuestions) - 1) {
+        if (this.currentIndex === RandomizedQuestions.length - 1) {
             super.clearPage();
             return new EndPage(this.elements, this.data);
         } else if ((this.currentIndex + 1) % Config.breakInterval === 0) {

@@ -37,6 +37,7 @@ export class ParabolicSlider extends BaseSlider {
         return data;
     }
     initializeSlider() {
+        const that = this;
         const margin = {top: 20, right: 20, bottom: 30, left: 50};
         const width = 200 - margin.left - margin.right;
         const height = 440 - margin.top - margin.bottom;
@@ -141,11 +142,11 @@ export class ParabolicSlider extends BaseSlider {
                 const cx = Math.min(Math.max(coordinates[0], 0), 140);
                 const cy = Math.min(Math.max(0.023 * cx * cx, 0), 440);
 
-                this.circle_x = Math.min(cx, 130);
-                this.circle_y = Math.min(cy, 390);
+                that.circle_x = Math.min(cx, 130);
+                that.circle_y = Math.min(cy, 390);
                 d3.select('g.dot circle')
-                    .attr("cx", this.circle_x)
-                    .attr("cy", this.circle_y);
+                    .attr("cx", that.circle_x)
+                    .attr("cy", that.circle_y);
                 horizontal_bar.attr("width", Math.min(cx, width));
                 vertical_bar.attr("height", Math.min(cy, height));
                 clicked = false;
@@ -174,12 +175,12 @@ export class ParabolicSlider extends BaseSlider {
                 const cy = Math.min(Math.max(0.023 * cx * cx, 0), 440);
                 container.select("g.dot").attr("style", "display:block");
 
-                this.circle_x = Math.min(cx, 130);
-                this.circle_y = Math.min(cy, 390);
+                that.circle_x = Math.min(cx, 130);
+                that.circle_y = Math.min(cy, 390);
                 if (!clicked) {
                     d3.select('g.dot circle')
-                        .attr("cx", this.circle_x)
-                        .attr("cy", this.circle_y);
+                        .attr("cx", that.circle_x)
+                        .attr("cy", that.circle_y);
                     transformedBackground.select("rect[id='horizontal']")
                         .attr("width", Math.min(cx, width));
                     transformedBackground.select("rect[id='vertical']")
@@ -213,6 +214,7 @@ export class LinearSlider extends BaseSlider {
         this.initializeSlider();
     }
     initializeSlider() {
+        const that = this;
         const $slider = $('<div>', {'id': 'slider'});
         this.parentElem.append($slider);
         this.slider = $slider;
@@ -228,11 +230,11 @@ export class LinearSlider extends BaseSlider {
             create() {
                 const value = $slider.slider("value");
                 $handle.html(value);
-                this.linear_position = value;
+                that.linear_position = value;
             },
             slide(event, ui) {
                 $handle.html(ui.value);
-                this.linear_position = ui.value;
+                that.linear_position = ui.value;
             },
             start() {
                 $handle.show();

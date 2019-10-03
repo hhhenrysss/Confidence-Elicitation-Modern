@@ -21,13 +21,7 @@ class OptionsElement {
         for (let i = 0; i < this.config.length; i += 1) {
             const currentConfig = this.config[i];
             const currentId = `radio-${i}`;
-            let inputElement = null;
-            if (i === 0) {
-                inputElement = $(`<input id="${currentId}" type="radio" value="${currentConfig.value}" checked>`);
-                this.selectedItem = currentConfig.value;
-            } else {
-                inputElement = $(`<input id="${currentId}" type="radio" value="${currentConfig.value}">`);
-            }
+            const inputElement = $(`<input id="${currentId}" type="radio" value="${currentConfig.value}">`);
             allInputElements.push(inputElement);
             const labelElement = $(`<label for="${currentId}">${currentConfig.name}</label>`);
             const inputLabelWrapperElement = $(`<div class="question-option-wrapper"></div>`);

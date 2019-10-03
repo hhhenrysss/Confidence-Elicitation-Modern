@@ -10,7 +10,8 @@ export class TutorialPage extends BasePage{
         super(elements);
 
         this.currentContentIndex = 0;
-        this.selectedValue = '';
+        this.selectedOption = '';
+        this.selectedChartData = null;
 
         const sectionTitleElem = CreateSectionTitle('');
         const questionTitleElem = CreateQuestionTitle('');
@@ -50,24 +51,25 @@ export class TutorialPage extends BasePage{
         }
     }
     canProceed() {
-        const selectedValue = this.optionsElem.value;
-        if (GroupTypeUtils.isGroupType(selectedValue)) {
-            this.elements.errorElem.hide();
-            this.selectedValue = selectedValue;
-            return true;
+        const selectedOption = this.optionsElem.value;
+        const chartData = this.graph.getValues();
+        if ((GroupTypeUtils.isGroupType(selectedOption)) || chartData === null) {
+            super.addErrorMessage('Please enter response for the tutorial question');
+            return false;
         }
-        this.elements.errorElem.html('Please make a selection');
-        this.elements.errorElem.show();
-        return false;
+        this.selectedOption = selectedOption;
+        this.selectedChartData = chartData;
+        super.hideErrorMessage();
+        return true;
     }
     record() {
         const question = TutorialQuestions[this.currentContentIndex];
         this.data.TutorialResponses.push(
-            new Response(question.id, question.correctAnswer, this.selectedValue, this.graph.getValues())
+            new Response(question.id, question.correctAnswer, this.selectedOption, this.selectedChartData)
         )
     }
     nextElement() {
-        if (this.currentContentIndex === len(TutorialQuestions) - 1) {
+        if (this.currentContentIndex === TutorialQuestions.length - 1) {
             super.clearPage();
             return new QuestionPage(this.elements, this.data);
         } else {
