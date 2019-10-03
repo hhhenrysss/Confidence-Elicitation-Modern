@@ -86,6 +86,17 @@ export class BankPage extends BasePage {
         });
     }
 
+    canProceed() {
+        return true;
+    }
+
+    record() {
+        this.data.TotalBankBalance += this.data.RoundRewardsHistory.reduce((acc, curr) => {
+            return acc + curr.amount;
+        }, 0);
+        this.data.RoundRewardsHistory = [];
+    }
+
     nextElement() {
         super.clearPage();
         if (this.lastIndex === len(RandomizedQuestions) - 1) {
