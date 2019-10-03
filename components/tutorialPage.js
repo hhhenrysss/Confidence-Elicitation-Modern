@@ -34,7 +34,8 @@ export class TutorialPage extends BasePage{
 
     clearAll() {
         this.optionsElem.value = '';
-        this.selectedValue = '';
+        this.selectedOption = '';
+        this.selectedChartData = null;
         this.graph = null;
         this.elements.graphElem.empty();
     }
