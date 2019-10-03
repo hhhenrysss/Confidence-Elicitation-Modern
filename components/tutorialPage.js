@@ -43,7 +43,7 @@ export class TutorialPage extends BasePage{
         this.sectionTitleElem.html(question.title);
         this.questionTitleElem.html(question.text);
 
-        this.elements.graphElem.append(CreateExplanation(question[this.data.Type])[0]);
+        this.elements.graphElem.append(CreateExplanation(question[this.data.Type][0]));
         this.graph = GroupTypeUtils.isParabolic(this.data.Type) ?
             new ParabolicSlider(this.elements.graphElem) : new LinearSlider(this.elements.graphElem);
         for (let i = 1; i < question[this.data.Type].length; i += 1) {

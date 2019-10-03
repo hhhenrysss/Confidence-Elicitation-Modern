@@ -79,7 +79,9 @@ export class BankPage extends BasePage {
         const timer = new Timer();
         timer.start({countdown: true, startValues: {seconds: Config.breakDuration}});
         timer.addEventListener('secondsUpdated', () => {
-            countDownBanner.html(generateCountDownText(timer.getTimeValues().toString()));
+            const segments = timer.getTimeValues().toString().split(':');
+            const seconds = segments[segments.length - 1];
+            countDownBanner.html(generateCountDownText(seconds));
         });
         timer.addEventListener('targetAchieved', () => {
             wrapper.remove();
