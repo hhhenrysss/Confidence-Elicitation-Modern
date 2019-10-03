@@ -2,6 +2,8 @@ import $ from "jquery";
 import {SurveyResults} from "./storage/store";
 import {FrontPage} from "./components/frontPage";
 
+import './assets/styles/style.css';
+
 class Survey {
     constructor() {
         this.elems = {
@@ -11,6 +13,7 @@ class Survey {
             errorElem: $('#proceed-error-msg'),
         };
         this.results = new SurveyResults();
+        this.elems.errorElem.hide();
     }
     storeResults() {
         const str = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.results));

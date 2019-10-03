@@ -73,7 +73,7 @@ export class BankPage extends BasePage {
         const countDownBanner = $('<div class="timer-countdown"></div>');
         countDownBanner.html(generateCountDownText(Config.breakDuration));
         const wrapper = $('<div class="timer-wrapper"></div>');
-        wrapper.append(countDownElem).append(countDownBanner);
+        wrapper.append(countDownBanner).append(countDownElem);
         this.elements.graphElem.append(wrapper);
 
         const timer = new Timer();

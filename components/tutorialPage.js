@@ -55,7 +55,7 @@ export class TutorialPage extends BasePage{
         const selectedOption = this.optionsElem.value;
         const chartData = this.graph.getValues();
         if ((GroupTypeUtils.isGroupType(selectedOption)) || chartData === null) {
-            super.addErrorMessage('Please enter response for the tutorial question');
+            super.addErrorMessage('Please enter valid responses for the tutorial question');
             return false;
         }
         this.selectedOption = selectedOption;

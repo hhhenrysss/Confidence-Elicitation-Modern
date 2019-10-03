@@ -1,0 +1,224 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body {
+    padding: 2em 2em;
+    margin: 0 auto;
+    width: 70%;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+    color: rgb(119,119,119);
+    font-weight: 400;
+    font-size: 16px;
+    font-style: normal;
+    word-wrap: break-word;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: #f3f2f1;
+}
+
+.content_wrapper {
+    -webkit-box-shadow: 0 0 0.1em silver;
+    box-shadow: 0 0 1em silver;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 1rem 3em;
+    width: 100%;
+    background-color: rgb(255,255,255);
+    display: block;
+}
+
+.section-title {
+    font-size: 1em; /*14px*/
+    padding-bottom: 0.5em;
+    color: #2874A6;
+}
+
+.question-title {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 0.875em; /*14px*/
+    font-weight: 500;
+}
+
+.question-explanation {
+    margin-bottom: 1rem;
+    display: block;
+    font-size: 0.75em; /*12px*/
+}
+
+label {
+    font-size: 0.75em;
+}
+input[type="text"] {
+    margin-bottom: 1em;
+    font-size: 0.75em;
+}
+input[type="radio"] {
+    vertical-align: baseline;
+}
+.question-option-wrapper {
+    margin-bottom: 0.5em;
+}
+.question-options {
+    margin-top: 1em;
+}
+
+#actions {
+    height: 2.5em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#proceed-next-section {
+    color: #ffffff;
+    background-color: #2874A6;
+    font-size: 0.75em; /*12px*/
+    border: 0;
+    padding: 0.5em 1em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 0.2em;
+    -webkit-transition: 0.2s;
+    -o-transition: 0.2s;
+    transition: 0.2s;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+#proceed-next-section:hover {
+    background-color: #22628c;
+    cursor: pointer;
+}
+
+#proceed-error-msg {
+    margin: 0 0 0 1em;
+    padding: 0.5em 1em;
+    font-size: 0.75em;
+    width: 100%;
+    background-color: #fed9cc;
+}
+
+svg {
+    display: block;
+    margin: auto;
+}
+
+svg text, #originData {
+    font-size: 0.625em; /*10px*/
+}
+
+#originData {
+    display: block;
+    margin: auto;
+    text-align: center;
+    line-height: 1.5625em; /*25px*/
+
+}
+
+#slider {
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+#slider .ui-slider-handle {
+    font-size: 0.625em; /*10px*/
+    width: 2.4em;
+    height: 2.4em;
+    top: 50%;
+    margin-top: -1.2em;
+    border-radius: 0.4rem;
+    border: #2874A6 0.125em solid; /*2px*/
+    text-align: center;
+    line-height: 2.4em;
+}
+
+#slider .ui-state-active {
+    background-color: #2874A6;
+}
+
+#slider .ui-slider-range {
+    background-color: #D6EAF8;
+}
+
+
+/*Loader animations*/
+@keyframes ring_loading {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    25% {
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+    50% {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+    75% {
+        -webkit-transform: rotate(270deg);
+        transform: rotate(270deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes ring_loading {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    25% {
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+    50% {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+    75% {
+        -webkit-transform: rotate(270deg);
+        transform: rotate(270deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+.loading {
+    display: inline-block;
+    width: 2.25em; /*36px*/
+    height: 2.25em;
+}
+
+.loading:after {
+    content: " ";
+    display: block;
+    width: 1.25em; /*20px*/
+    height: 1.25em;
+    margin: 0.0625em; /*1px*/
+    border-radius: 50%;
+    border: 0.3125em solid; /*5px*/
+    border-color: #4D90FE transparent #F4D03F transparent;
+    animation: ring_loading 5s linear 0s infinite;
+    -webkit-animation-name: ring_loading;
+    -webkit-animation-duration: 5s;
+    -webkit-animation-delay: 0s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+}
+
+.timer-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+a { /* All default hyperlink styles are disabled */
+    color: inherit;
+    text-decoration: none;
+}
