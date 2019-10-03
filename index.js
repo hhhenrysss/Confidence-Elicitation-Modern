@@ -43,6 +43,16 @@ class Survey {
 }
 
 $(() => {
+    $('#root').empty().append($.parseHTML(
+        `
+        <div id="question-text"></div>
+        <div id="question-graph"></div>
+        <div id="actions">
+            <button id="proceed-next-section">Continue</button>
+            <div id="proceed-error-msg"></div>
+        </div>
+        `
+    ));
     const survey = new Survey();
     survey.init();
 });

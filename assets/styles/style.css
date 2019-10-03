@@ -120,6 +120,7 @@ svg text, #originData {
 #slider {
     margin-top: 3em;
     margin-bottom: 3em;
+    border: 1px solid rgb(119,119,119);
 }
 
 #slider .ui-slider-handle {
@@ -132,10 +133,7 @@ svg text, #originData {
     border: #2874A6 0.125em solid; /*2px*/
     text-align: center;
     line-height: 2.4em;
-}
-
-#slider .ui-state-active {
-    background-color: #2874A6;
+    background-color: white;
 }
 
 #slider .ui-slider-range {

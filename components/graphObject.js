@@ -211,7 +211,7 @@ export class LinearSlider extends BaseSlider {
         super();
         this.parentElem = parentElem;
         this.slider = null;
-        this.linear_position = -1;
+        this.linear_position = 50;
 
         this.initializeSlider();
     }
