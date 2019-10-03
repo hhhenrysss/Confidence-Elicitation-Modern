@@ -7,7 +7,7 @@ export class FrontPage extends BasePage{
     constructor(elements, data) {
         super(elements);
 
-        const layoutElem = elements.textElem.append(CreateSectionTitle('Website for Confidence Elicitation Testing'))
+        const layoutElem = elements.textElem.append(CreateSectionTitle('Testing Website for Confidence Elicitation Project'))
             .append(CreateQuestionTitle('Please enter the subject ID.'))
             .append(CreateExplanation('You must enter a subject ID.'));
 

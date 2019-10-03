@@ -23,6 +23,7 @@ class Survey {
     }
     init() {
         let currentPage = new FrontPage(this.elems, this.results);
+        const body = $('html, body');
         this.elems.buttonElem.click(() => {
             if (currentPage == null) {
                 this.storeResults();
@@ -32,6 +33,7 @@ class Survey {
             if (currentPage.canProceed()) {
                 currentPage.record();
                 currentPage = currentPage.nextElement();
+                body.animate({scrollTop: 0}, 200);
             }
         });
     }

@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import $ from "jquery";
 import {Timer} from 'easytimer.js';
 import {BasePage} from "./baseObject";
 import {Config} from "../configurations";
@@ -36,7 +37,7 @@ export class BankPage extends BasePage {
         const y = d3.scale.linear().range([height, 0]);
         y.domain(history.map(d => d.amount)).nice();
         const xScale = d3.scale.linear().domain(
-            [history[0].questionNumber, history[len(history - 1)].questionNumber]
+            [history[0].questionNumber, history[history.length - 1].questionNumber]
         ).range([0, width]);
         const yScale = d3.scale.linear().domain([-0.75, 0.25]).range([height, 0]);
         const xAxis = d3.svg.axis().scale(xScale).orient('bottom').tickFormat(d3.format('d'));
@@ -99,7 +100,7 @@ export class BankPage extends BasePage {
 
     nextElement() {
         super.clearPage();
-        if (this.lastIndex === len(RandomizedQuestions) - 1) {
+        if (this.lastIndex === RandomizedQuestions.length - 1) {
             return new EndPage(this.elements, this.data);
         } else {
             return new QuestionPage(this.elements, this.data, this.lastIndex + 1);
