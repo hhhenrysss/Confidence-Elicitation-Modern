@@ -64,13 +64,16 @@ export class QuestionPage extends BasePage {
 
     record() {
         const question = RandomizedQuestions[this.currentIndex];
-        this.data.Responses.push(
-            new Response(question.id, question.answer, this.selectedOption, this.selectedChartData)
-        );
+        const response = new Response(question.id, question.answer, this.selectedOption, this.selectedChartData);
+        this.data.Responses.push(response);
+        this.data.RoundRewardsHistory.push({
+            questionNumber: this.currentIndex + 1,
+            amount: response.calculateMoney()
+        });
     }
 
     nextElement() {
-        if (this.currentIndex === len(RandomizedQuestions) -1 ) {
+        if (this.currentIndex === len(RandomizedQuestions) - 1) {
             super.clearPage();
             return new EndPage(this.elements, this.data);
         } else if ((this.currentIndex + 1) % Config.breakInterval === 0) {

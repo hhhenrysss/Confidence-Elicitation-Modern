@@ -1,6 +1,7 @@
 import {BasePage} from "./baseObject";
 import {CreateExplanation, CreateSectionTitle} from "./miscObjects";
 import {TutorialPage} from "./tutorialPage";
+import {IntroductionStatements} from "../assets/questions/introductionStatements";
 
 export class StartPage extends BasePage {
     constructor(elements, data) {
@@ -9,9 +10,11 @@ export class StartPage extends BasePage {
         this.elements = elements;
         this.data = data;
 
-        elements.textElem.append(CreateSectionTitle('INSTRUCTIONS'))
-            .append(CreateExplanation(`You will receive $10 for your participation in this experiment. This is yours to keep regardless of how you perform in the experiment.`))
-            .append(CreateExplanation(`In the subsequent pages you will encounter three sample questions to help you get familiar with the format of questions.`));
+        const elem = elements.textElem.append(CreateSectionTitle('INSTRUCTIONS'));
+        const instructions = IntroductionStatements[this.data.Type];
+        for (const instruction of instructions) {
+            elem.append(CreateExplanation(instruction));
+        }
     }
     canProceed() {
         return true
