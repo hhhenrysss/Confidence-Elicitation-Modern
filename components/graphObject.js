@@ -2,6 +2,7 @@ import * as d3 from "d3";
 import $ from "jquery";
 import 'jquery-ui/ui/widgets/slider';
 
+import '../assets/styles/paraslider_style.css';
 import '../node_modules/jquery-ui/themes/base/slider.css';
 
 export class BaseSlider {

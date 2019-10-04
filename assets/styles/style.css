@@ -213,7 +213,7 @@ svg text, #originData {
 
 .timer-wrapper {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 a { /* All default hyperlink styles are disabled */
