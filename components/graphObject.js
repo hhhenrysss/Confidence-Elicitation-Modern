@@ -82,6 +82,7 @@ export class ParabolicSlider extends BaseSlider {
             .attr("transform", "translate(" + (padding / 2) + "," + (height / 2) + ")rotate(-90)")
             .text("3 points");
         transformedBackground.append("text")
+            .attr("class", "parabolic-axis-explanation")
             .attr("text-anchor", "middle")
             .attr("x", "0")
             .attr("y", "-10")
@@ -91,9 +92,10 @@ export class ParabolicSlider extends BaseSlider {
             .attr("text-anchor", "middle")
             .attr("x", "50")
             .attr("y", "-10")
-            .attr("transform", "translate(" + (width / 2) + "," + (0) + ")")  // centre below axis
+            .attr("transform", "translate(" + (width / 2 + 10) + "," + (0) + ")")  // centre below axis
             .text("1 point");
         transformedBackground.append("text")
+            .attr("class", "parabolic-axis-explanation")
             .attr("text-anchor", "middle")
             .attr("x", "0")
             .attr("y", "-10")

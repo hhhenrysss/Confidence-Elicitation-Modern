@@ -5,7 +5,6 @@ body {
     margin: 0 auto;
     width: 70%;
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
-    color: rgb(119,119,119);
     font-weight: 400;
     font-size: 16px;
     font-style: normal;
@@ -18,6 +17,8 @@ body {
 .content_wrapper {
     -webkit-box-shadow: 0 0 0.1em silver;
     box-shadow: 0 0 1em silver;
+    -webkit-box-shadow: 0 3.2px 7.2px 0 rgba(0, 0, 0, 0.132), 0 0.6px 1.8px 0 rgba(0, 0, 0, 0.108);
+    box-shadow: 0 3.2px 7.2px 0 rgba(0, 0, 0, 0.132), 0 0.6px 1.8px 0 rgba(0, 0, 0, 0.108);
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     margin: 0 auto;
@@ -41,6 +42,7 @@ body {
 }
 
 .question-explanation {
+    margin-top: 1rem;
     margin-bottom: 1rem;
     display: block;
     font-size: 0.75em; /*12px*/
@@ -103,24 +105,31 @@ input[type="radio"] {
 svg {
     display: block;
     margin: auto;
+    height: 100%;
 }
 
-svg text, #originData {
-    font-size: 0.625em; /*10px*/
+#bank-vis .bar.negative {
+    fill: #da3b01;
+    opacity: 0.4;
 }
 
-#originData {
-    display: block;
-    margin: auto;
-    text-align: center;
-    line-height: 1.5625em; /*25px*/
+#bank-vis .bar.positive {
+    fill: #00ad56;
+    opacity: 0.4;
+}
 
+#parabolic {
+    font-size: 0.75em;
+}
+
+#parabolic .parabolic-axis-explanation {
+    fill: #797775;
 }
 
 #slider {
     margin-top: 3em;
     margin-bottom: 3em;
-    border: 1px solid rgb(119,119,119);
+    border: 1px solid #edebe9;
 }
 
 #slider .ui-slider-handle {
@@ -214,6 +223,13 @@ svg text, #originData {
 .timer-wrapper {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    font-size: 0.75em;
+    margin-top: 2em;
+}
+
+.timer-wrapper .timer-countdown {
+    margin-right: 1em;
 }
 
 a { /* All default hyperlink styles are disabled */

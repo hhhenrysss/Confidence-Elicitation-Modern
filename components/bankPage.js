@@ -7,10 +7,144 @@ import {RandomizedQuestions} from "../assets/questions/shuffleQuestions";
 import {EndPage} from "./endPage";
 import {QuestionPage} from "./questionPage";
 import {GroupTypeUtils} from "../storage/store";
+import {CreateSectionTitle} from "./miscObjects";
 
 function generateCountDownText(num) {
     return `After ${num} seconds, you may continue`;
 }
+
+
+// Modified from https://gist.github.com/llad/3766585
+class Chart {
+    constructor() {
+        this._margin = {top: 12, right: 100, bottom: 30, left: 50};
+        this._width = 420;
+        this._height = 420;
+        this._xRoundBands = 0.5;
+        this._xValue = d => d[0];
+        this._yValue = d => d[1];
+        this._xScale = d3.scale.ordinal();
+        this._yScale = d3.scale.linear();
+        this._yAxis = d3.svg.axis().scale(this._yScale).orient("left");
+        this._xAxis = d3.svg.axis().scale(this._xScale);
+    }
+    init(selection) {
+        const that = this;
+        selection.each(function(data) {
+            // Convert data to standard representation greedily;
+            // this is needed for non-deterministic accessors.
+            const xTicks = data.map(pair => pair[0]);
+            const yTicks = ['', -0.75, -0.5, -0.25, 0, 0.25, ''];
+            data = data.map((d, i) => [that._xValue.call(data, d, i), that._yValue.call(data, d, i)]);
+            // Update the x-scale.
+            that._xScale.domain(data.map(d => d[0]))
+                .rangeRoundBands([0, that._width - that._margin.left - that._margin.right], that._xRoundBands);
+            // Update the y-scale.
+            that._yScale.domain([-0.75, 0.25])
+                .range([that._height - that._margin.top - that._margin.bottom, 0])
+                .nice();
+            // Select the svg element, if it exists.
+            const svg = d3.select(this).selectAll("svg").data([data]);
+            // Otherwise, create the skeletal chart.
+            const gEnter = svg.enter().append("svg").append("g");
+            gEnter.append("g").attr("class", "bars");
+            gEnter.append("g").attr("class", "y axis");
+            gEnter.append("g").attr("class", "x axis");
+            // Update the outer dimensions.
+            svg.attr("width", that._width).attr("height", that._height);
+            // Update the bars.
+            const bar = svg.select(".bars").selectAll(".bar").data(data);
+            bar.enter().append("rect");
+            bar.exit().remove();
+            bar.attr("class", d => d[1] < 0 ? "bar negative" : "bar positive")
+                .attr("x", d => that.X(d))
+                .attr("y", d => d[1] < 0 ? that.Y0() : that.Y(d))
+                .attr("width", that._xScale.rangeBand())
+                .attr("height", d => Math.abs(that.Y(d) - that.Y0()));
+            // add labels to each bar
+            svg.selectAll("text")
+                .data(data)
+                .enter()
+                .append("text")
+                .text(d => `$ ${d[1].toFixed(2)}`)
+                .attr("x", d => that.X(d) + that._margin.left)
+                .attr("y", d => {
+                    const base = Math.abs(that.Y(d) - that.Y0());
+                    if (d[1] === 0) {
+                        return base + 10;
+                    } else if (d[1] < 0) {
+                        return base + that.Y0() + 30;
+                    } else {
+                        return that.Y(d);
+                    }
+                })
+                .style("font-size","8px");
+
+            const g = svg.select("g")
+                .attr("transform", "translate(" + that._margin.left + "," + that._margin.top + ")");
+            const xAxisElem = g.select(".x.axis")
+                .attr("transform", "translate(0," + that.Y0() + ")")
+                .call(that._xAxis.tickValues(xTicks).tickFormat(d => d).tickSize(6).outerTickSize(0));
+            xAxisElem.selectAll("text").style("font-size","12px").style("opacity", "0.7");
+            // Update the y-axis.
+            const yAxisElem = g.select(".y.axis")
+                .call(that._yAxis.tickValues(yTicks).tickFormat(d => `${d}`).tickSize(6).outerTickSize(0));
+            yAxisElem.selectAll("text").style("font-size","12px").style("opacity", "0.7");
+
+            // add labels
+            gEnter.append("text")
+                .attr("class", "x label")
+                .attr("text-anchor", "end")
+                .attr("transform", `translate(${that._width - that._margin.right + 30}, ${that.Y0() + 2})`)
+                .style("font-size","10px")
+                .text("Question Number");
+            gEnter.append("text")
+                .attr("class", "y label")
+                .attr("text-anchor", "begin")
+                .attr("transform", `translate(2, ${that._height - that._margin.top - that._margin.bottom + 20})`)
+                .style("font-size","10px")
+                .text("Earning per question");
+        });
+    }
+
+    // The x-accessor for the path generator; _xScale ∘ _xValue.
+    X(d) {
+        return this._xScale(d[0]);
+    }
+    Y0() {
+        return this._yScale(0);
+    }
+    // The x-accessor for the path generator; _yScale ∘ _yValue.
+    Y(d) {
+        return this._yScale(d[1]);
+    }
+    margin(arg) {
+        if (!arguments.length) return this._margin;
+        this._margin = arg;
+        return this;
+    }
+    width(arg) {
+        if (!arguments.length) return this._width;
+        this._width = arg;
+        return this;
+    }
+    height(arg) {
+        if (!arguments.length) return this._height;
+        this._height = arg;
+        return this;
+    }
+    x(arg) {
+        if (!arguments.length) return this._xValue;
+        this._xValue = arg;
+        return this;
+    }
+    y(arg) {
+        if (!arguments.length) return this._yValue;
+        this._yValue = arg;
+        return this;
+    }
+}
+
 
 export class BankPage extends BasePage {
     constructor(elements, data, lastIndex) {
@@ -28,45 +162,21 @@ export class BankPage extends BasePage {
         this.renderTimeCountDown();
     }
     renderBank() {
+        this.elements.textElem.append(CreateSectionTitle('Bank Results'));
+        const data = this.data.RoundRewardsHistory.map(obj => {
+            return [obj.questionNumber, obj.amount];
+        });
         this.elements.graphElem.append($(`<div id="bank-vis"></div>`));
-        const history = this.data.RoundRewardsHistory;
-        const width = window.innerWidth/4;
-        const height = window.innerHeight/2;
-        const x = d3.scale.ordinal().rangeRoundBands([0, width], 0.05);
-        x.domain(history.map(d => d.questionNumber));
-        const y = d3.scale.linear().range([height, 0]);
-        y.domain(history.map(d => d.amount)).nice();
-        const xScale = d3.scale.linear().domain(
-            [history[0].questionNumber, history[history.length - 1].questionNumber]
-        ).range([0, width]);
-        const yScale = d3.scale.linear().domain([-0.75, 0.25]).range([height, 0]);
-        const xAxis = d3.svg.axis().scale(xScale).orient('bottom').tickFormat(d3.format('d'));
-        const yAxis = d3.svg.axis().scale(yScale).orient('left');
-
-        const svg = d3.select("#bank-vis").append("svg")
-            .attr("width", width)
-            .attr("height", height)
-            .append("g");
-        svg.selectAll('.bars').data(history).enter()
-            .append('rect')
-            .attr('class', d => d.amount < 0 ? 'bar-chart-negative' : 'bar-chart-positive')
-            .attr('y', d => d.amount < 0 ? y(d.amount) : y(0))
-            .attr('x', d => x(d.questionNumber))
-            .attr('width', x.rangeBand())
-            .attr("height", d => Math.abs(y(d.amount) - y(0)));
-        svg.append('g').attr('class', 'bar-chart-x-axis').attr('transform', `translate(0, ${height})`).call(xAxis);
-        svg.append('g')
-            .attr('class', 'bar-chart-x-axis')
-            .append("line")
-            .attr("y1", y(0))
-            .attr("y2", y(0))
-            .attr("x2", width);
-        svg.append('g').attr('class', 'bar-chart-y-axis').call(yAxis);
-        svg.append('g')
-            .attr('class', "bar-chart-y-axis")
-            .append("text")
-            .text("$")
-            .attr("transform", "translate(15, 40), rotate(-90)");
+        d3.select("#bank-vis")
+            .datum(data)
+            .call((args) => {
+                const chart = new Chart();
+                chart.width(window.innerWidth/2);
+                chart.height(window.innerHeight/2);
+                chart.x(d => d[0]);
+                chart.y(d => d[1]);
+                chart.init(args);
+            });
     }
     renderTimeCountDown() {
         const countDownElem = $('<div class="timer-indicator"><div class="loading"></div></div>');

@@ -1,8 +1,9 @@
 import $ from "jquery";
-import {SurveyResults} from "./storage/store";
+import {GroupType, SurveyResults} from "./storage/store";
 import {FrontPage} from "./components/frontPage";
 
 import './assets/styles/style.css';
+import {BankPage} from "./components/bankPage";
 
 class Survey {
     constructor() {
@@ -25,6 +26,14 @@ class Survey {
         node.remove();
     }
     init() {
+        // this.results.Type = GroupType.parabolicWithBank;
+        // this.results.RoundRewardsHistory = new Array(10).fill(undefined).map((_, idx) => {
+        //     return {
+        //         questionNumber: idx,
+        //         amount: Math.random() * (0.25 - (-0.75)) + (-0.75)
+        //     }
+        // });
+        // new BankPage(this.elems, this.results, 0);
         let currentPage = new FrontPage(this.elems, this.results);
         const body = $('html, body');
         this.elems.buttonElem.click(() => {
