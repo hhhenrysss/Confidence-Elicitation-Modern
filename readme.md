@@ -13,4 +13,4 @@ Deployed GitHub Pages at https://hhhenrysss.github.io/Confidence-Elicitation-Mod
 * `npm run watch-build` to build development version
 
 ## Compatibility
-Right now only transpile no polyfills
+Use `npx browserslist` to see supported browsers
