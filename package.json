@@ -6,7 +6,7 @@
   "scripts": {
     "obfuscate": "cd assets/questions && node obfuscateQuestions.js && cd ../..",
     "build": "npm run obfuscate && webpack --config webpack.prod.config.js --display-error-details",
-    "build-watch": "npm run obfuscate && webpack --config webpack.dev.config.js --watch --display-error-details"
+    "watch-build": "npm run obfuscate && webpack --config webpack.dev.config.js --watch --display-error-details"
   },
   "author": "Hang",
   "license": "ISC",
@@ -22,6 +22,7 @@
     "webpack-cli": "^3.3.9"
   },
   "dependencies": {
+    "core-js": "^3.2.1",
     "d3": "^3.5.17",
     "easytimer.js": "^4.0.1",
     "jquery": "^3.4.1",
