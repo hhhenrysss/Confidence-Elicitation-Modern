@@ -1,5 +1,5 @@
 import $ from "jquery";
-import {GroupType, SurveyResults} from "./storage/store";
+import {SurveyResults} from "./storage/store";
 import {FrontPage} from "./components/frontPage";
 
 import './assets/styles/style.css';
@@ -16,15 +16,6 @@ class Survey {
         this.results = new SurveyResults();
         this.elems.errorElem.hide();
     }
-    storeResults() {
-        const str = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.results));
-        const node = document.createElement('a');
-        node.setAttribute("href", str);
-        node.setAttribute("download", this.results.SubjectID + ".json");
-        document.body.appendChild(node); // required for firefox
-        node.click();
-        node.remove();
-    }
     init() {
         // this.results.Type = GroupType.parabolicWithBank;
         // this.results.RoundRewardsHistory = new Array(10).fill(undefined).map((_, idx) => {
@@ -37,21 +28,22 @@ class Survey {
         let currentPage = new FrontPage(this.elems, this.results);
         const body = $('html, body');
         this.elems.buttonElem.click(() => {
-            if (currentPage == null) {
-                this.storeResults();
-                location.reload(true);
-                return;
-            }
             if (currentPage.canProceed()) {
                 currentPage.record();
                 currentPage = currentPage.nextElement();
                 body.animate({scrollTop: 0}, 200);
+            }
+            if (currentPage == null) {
+                window.onbeforeunload = null;
+                location.reload(true);
             }
         });
     }
 }
 
 $(() => {
+    window.onbeforeunload = () => "Your previous answers will be lost";
+
     $('#root').empty().append($.parseHTML(
         `
         <div id="question-text"></div>

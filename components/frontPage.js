@@ -2,6 +2,7 @@ import $ from "jquery";
 import {BasePage} from "./baseObject";
 import {CreateExplanation, CreateQuestionTitle, CreateSectionTitle} from "./miscObjects";
 import {GroupSelectionPage} from "./groupSelectionPage";
+import {GroupType} from "../storage/store";
 
 export class FrontPage extends BasePage{
     constructor(elements, data) {
@@ -37,7 +38,7 @@ export class FrontPage extends BasePage{
     }
 
     record() {
-        this.data.subjectID = this.subjectID;
+        this.data.SubjectID = this.subjectID;
     }
 
     nextElement() {

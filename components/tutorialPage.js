@@ -54,7 +54,7 @@ export class TutorialPage extends BasePage{
     canProceed() {
         const selectedOption = this.optionsElem.value;
         const chartData = this.graph.getValues();
-        if (selectedOption == null || (GroupTypeUtils.isGroupType(selectedOption)) || chartData == null) {
+        if (selectedOption == null || chartData == null) {
             super.addErrorMessage('Please enter valid responses for the tutorial question');
             return false;
         }

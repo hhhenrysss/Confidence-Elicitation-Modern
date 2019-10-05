@@ -30,6 +30,7 @@ export class SurveyResults {
     constructor() {
         this.SubjectID = '';
         this.Type = '';
+        this.ReadableType = '';
         this.TotalBankBalance = 12;
         this.RoundRewardsHistory = [];
         this.Responses = [];
@@ -53,6 +54,7 @@ export const GroupTypeUtils = {
      * @return {boolean}
      */
     isGroupType(str) {
+        if (str == null) { return false; }
         return this.groupTypeValuesSet.has(str);
     },
     isLinear(str) {

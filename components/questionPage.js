@@ -52,7 +52,7 @@ export class QuestionPage extends BasePage {
     canProceed() {
         const selectedOption = this.optionsElem.value;
         const chartData = this.graph.getValues();
-        if ((GroupTypeUtils.isGroupType(selectedOption)) || chartData === null) {
+        if (selectedOption == null || chartData == null) {
             super.addErrorMessage('Please enter valid response');
             return false;
         }

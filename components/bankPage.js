@@ -7,7 +7,7 @@ import {RandomizedQuestions} from "../assets/questions/shuffleQuestions";
 import {EndPage} from "./endPage";
 import {QuestionPage} from "./questionPage";
 import {GroupTypeUtils} from "../storage/store";
-import {CreateSectionTitle} from "./miscObjects";
+import {CreateQuestionTitle, CreateSectionTitle} from "./miscObjects";
 
 function generateCountDownText(num) {
     return `After ${num} seconds, you may continue`;
@@ -71,7 +71,7 @@ class Chart {
                 .attr("y", d => {
                     const base = Math.abs(that.Y(d) - that.Y0());
                     if (d[1] === 0) {
-                        return base + 10;
+                        return that.Y(d);
                     } else if (d[1] < 0) {
                         return base + that.Y0() + 30;
                     } else {
@@ -181,10 +181,11 @@ export class BankPage extends BasePage {
     renderTimeCountDown() {
         const countDownElem = $('<div class="timer-indicator"><div class="loading"></div></div>');
         const countDownBanner = $('<div class="timer-countdown"></div>');
+        const countDownNotice = CreateQuestionTitle('Please do not switch to another web page or desktop application');
         countDownBanner.html(generateCountDownText(Config.breakDuration));
         const wrapper = $('<div class="timer-wrapper"></div>');
         wrapper.append(countDownBanner).append(countDownElem);
-        this.elements.graphElem.append(wrapper);
+        this.elements.graphElem.append(countDownNotice).append(wrapper);
 
         const timer = new Timer();
         timer.start({countdown: true, startValues: {seconds: Config.breakDuration}});
@@ -195,6 +196,7 @@ export class BankPage extends BasePage {
         });
         timer.addEventListener('targetAchieved', () => {
             wrapper.remove();
+            countDownNotice.remove();
             this.elements.buttonElem.show();
         });
     }

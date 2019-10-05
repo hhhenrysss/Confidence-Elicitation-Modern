@@ -1,5 +1,5 @@
 import {BasePage} from "./baseObject";
-import {CreateOption, CreateExplanation, CreateQuestionTitle, CreateSectionTitle} from "./miscObjects";
+import {CreateExplanation, CreateOption, CreateQuestionTitle, CreateSectionTitle} from "./miscObjects";
 import {GroupType, GroupTypeUtils} from "../storage/store";
 import {StartPage} from "./startPage";
 
@@ -37,6 +37,7 @@ export class GroupSelectionPage extends BasePage {
     }
     record() {
         this.data.Type = this.groupSelectResult;
+        this.data.ReadableType = Object.keys(GroupType).find(key => GroupType[key] === this.groupSelectResult);
     }
     nextElement() {
         super.clearPage();
