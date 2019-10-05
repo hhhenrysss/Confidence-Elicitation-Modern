@@ -203,8 +203,8 @@ export class ParabolicSlider extends BaseSlider {
             return null;
         }
         return {
-            x: this.circle_x,
-            y: this.circle_y
+            x: this.circle_x/130,
+            y: this.circle_y/390
         }
     }
 }
@@ -253,6 +253,6 @@ export class LinearSlider extends BaseSlider {
         if (this.linear_position < 0) {
             return null;
         }
-        return this.linear_position;
+        return this.linear_position/100;
     }
 }
