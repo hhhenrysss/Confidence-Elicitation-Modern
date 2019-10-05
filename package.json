@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "obfuscate": "cd assets/questions && node obfuscateQuestions.js && cd ../..",
-    "build": "npm run obfuscate && webpack --display-error-details",
-    "build-watch": "npm run obfuscate && webpack --watch --display-error-details"
+    "build": "npm run obfuscate && webpack --config webpack.prod.config.js --display-error-details",
+    "build-watch": "npm run obfuscate && webpack --config webpack.dev.config.js --watch --display-error-details"
   },
   "author": "Hang",
   "license": "ISC",
