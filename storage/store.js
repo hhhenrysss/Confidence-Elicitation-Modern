@@ -1,28 +1,28 @@
 export class Response {
-    static calculateBrier(predicted, actual) {
-        return Math.pow(predicted - actual, 2);
-    }
     constructor(questionID, correctAnswer, attemptedAnswer, graphValue) {
         this.questionID = questionID;
         this.correctAnswer = correctAnswer;
         this.attemptedAnswer = attemptedAnswer;
         this.graphValue = typeof graphValue === 'number' ? graphValue : graphValue.x;
-        this.brierScore = Response.calculateBrier(this.graphValue, this.correctAnswer === 'Yes' ? 1 : 0);
+        this.brierScore = this.calculateBrier();
     }
-    calculateMoney() {
-        if (this.correctAnswer === this.attemptedAnswer) { // Correct
-            if (this.graphValue === 0.5){
-                return 0;
+    calculateBrier() {
+        if (this.correctAnswer === 'Yes') {
+            if (this.attemptedAnswer === 'Yes') {
+                return Math.pow(this.graphValue - 1, 2);
             } else {
-                return this.graphValue * 0.25;
+                return Math.pow(1 - this.graphValue - 1, 2);
             }
         } else {
-            if (this.graphValue === 0.5){
-                return 0;
+            if (this.attemptedAnswer === 'Yes') {
+                return Math.pow(this.graphValue, 2);
             } else {
-                return 0.25 * (-3 * Math.pow(this.graphValue, 2));
+                return Math.pow(1-this.graphValue, 2);
             }
         }
+    }
+    calculateMoney() {
+        return -1 * this.brierScore + 0.25;
     }
 }
 
