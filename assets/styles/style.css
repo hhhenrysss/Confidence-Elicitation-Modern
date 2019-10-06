@@ -236,3 +236,8 @@ a { /* All default hyperlink styles are disabled */
     color: inherit;
     text-decoration: none;
 }
+
+hr {
+    border-style: solid;
+    border-color: #e1dfdd;
+}

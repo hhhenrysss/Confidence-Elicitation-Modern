@@ -203,7 +203,7 @@ export class ParabolicSlider extends BaseSlider {
             return null;
         }
         return {
-            x: this.circle_x/130,
+            x: this.circle_x/130/2 + 0.5, // the x axis's origin is 0.5 instead of 0
             y: this.circle_y/390
         }
     }

@@ -7,7 +7,7 @@ import {RandomizedQuestions} from "../assets/questions/shuffleQuestions";
 import {EndPage} from "./endPage";
 import {QuestionPage} from "./questionPage";
 import {GroupTypeUtils} from "../storage/store";
-import {CreateQuestionTitle, CreateSectionTitle} from "./miscObjects";
+import {CreateExplanation, CreateQuestionTitle, CreateSectionTitle} from "./miscObjects";
 
 function generateCountDownText(num) {
     return `After ${num} seconds, you may continue`;
@@ -177,6 +177,12 @@ export class BankPage extends BasePage {
                 chart.y(d => d[1]);
                 chart.init(args);
             });
+        const currentRound = this.data.RoundRewardsHistory.reduce((acc, curr) => acc + curr.amount, 0);
+        this.elements.graphElem.append(CreateQuestionTitle('Summary'))
+            .append(CreateExplanation(`Net reward from this round: ${currentRound.toFixed(2)}`))
+            .append(CreateExplanation(`Previous bank balance: ${this.data.TotalBankBalance}`))
+            .append(CreateExplanation(`Total Reward from all completed rounds: ${(currentRound + this.data.TotalBankBalance).toFixed(2)}`))
+            .append($('<hr>'));
     }
     renderTimeCountDown() {
         const countDownElem = $('<div class="timer-indicator"><div class="loading"></div></div>');

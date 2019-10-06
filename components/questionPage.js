@@ -64,7 +64,7 @@ export class QuestionPage extends BasePage {
 
     record() {
         const question = RandomizedQuestions[this.currentIndex];
-        const response = new Response(question.id, question.answer, this.selectedOption, this.selectedChartData);
+        const response = new Response(question.index, question.answer, this.selectedOption, this.selectedChartData);
         this.data.Responses.push(response);
         this.data.RoundRewardsHistory.push({
             questionNumber: this.currentIndex + 1,
