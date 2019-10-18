@@ -5,8 +5,6 @@ The original repository is in https://github.com/data-slinky/confidence-elicitat
 
 This website is a rewrite of the previous one, adding banks and new styles
 
-Deployed GitHub Pages at https://hhhenrysss.github.io/Confidence-Elicitation-Modern/
-
 ## Build
 * `npm install` to install corresponding packages
 * `npm run build` to build production version
