@@ -3,7 +3,7 @@ import $ from "jquery";
 import 'jquery-ui/ui/widgets/slider';
 
 import '../assets/styles/paraslider_style.css';
-import '../node_modules/jquery-ui/themes/base/slider.css';
+import '../../node_modules/jquery-ui/themes/base/slider.css';
 
 export class BaseSlider {
     constructor() {}
