@@ -38,12 +38,7 @@ export class SurveyResults {
     }
 }
 
-export const GroupType = {
-    linearWithBank: 'ABC',
-    parabolicWithBank: 'BCD',
-    linearNoBank: 'CDE',
-    parabolicNoBank: 'DEF'
-};
+export const GroupType = require('../../types/groupType');
 
 export const GroupTypeUtils = {
     groupTypeValuesSet: new Set(Object.values(GroupType)),

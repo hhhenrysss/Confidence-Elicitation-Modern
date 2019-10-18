@@ -16,7 +16,7 @@ export class EndPage extends BasePage {
         const str = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.data));
         const node = document.createElement('a');
         node.setAttribute("href", str);
-        node.setAttribute("download", this.data.SubjectID + ".json");
+        node.setAttribute("download", this.data.SubjectID + this.data.Type + ".json");
         document.body.appendChild(node); // required for firefox
         node.click();
         node.remove();
