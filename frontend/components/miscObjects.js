@@ -64,18 +64,41 @@ class OptionsElement {
     }
 }
 
-export function CreateOption(config) {
+class BannerElement {
+    constructor(mainText, confirmText, closeText, confirmHandler) {
+        const wrapper = $('<div class="banner-wrapper"></div>');
+        const main = $(`<div class="banner-main-text">${mainText}</div>`);
+        const actionsWrapper = $('<div class="banner-actions-wrapper"></div>');
+        const confirmAction = $(`<button class="banner-action-button">${confirmText}</button>`);
+        const closeAction = $(`<button class="banner-action-button">${closeText}</button>`);
+
+        wrapper.append(main).append(actionsWrapper.append(confirmAction).append(closeAction));
+        confirmAction.click(() => confirmHandler());
+        closeAction.click(() => wrapper.remove());
+
+        this.element = wrapper;
+    }
+    get jQueryObj() {
+        return this.element;
+    }
+}
+
+export function createBanner(mainText, confirmText, closeText, confirmHandler) {
+    return new BannerElement(mainText, confirmText, closeText, confirmHandler);
+}
+
+export function createOption(config) {
     return new OptionsElement(config);
 }
 
-export function CreateSectionTitle(str) {
+export function createSectionTitle(str) {
     return $(`<h1 class="section-title">${str}</h1>`);
 }
 
-export function CreateQuestionTitle(str) {
+export function createQuestionTitle(str) {
     return $(`<p class="question-title">${str}</p>`);
 }
 
-export function CreateExplanation(str) {
+export function createExplanation(str) {
     return $(`<p class="question-explanation">${str}</p>`);
 }

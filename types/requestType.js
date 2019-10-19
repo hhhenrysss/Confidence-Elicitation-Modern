@@ -1,4 +1,4 @@
-const Participant = require('./participantID');
+const {Participant} = require('./participantID');
 
 module.exports.UploadRequest = class UploadRequest extends Participant {
     constructor(num, group, data) {

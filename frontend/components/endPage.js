@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import {BasePage} from "./baseObject";
-import {CreateQuestionTitle, CreateSectionTitle} from "./miscObjects";
+import {createQuestionTitle, createSectionTitle} from "./miscObjects";
 
 export class EndPage extends BasePage {
     constructor(elements, data) {
@@ -9,8 +9,8 @@ export class EndPage extends BasePage {
         this.elements = elements;
         this.data = data;
 
-        this.elements.textElem.append(CreateSectionTitle('End of Experiment'))
-            .append(CreateQuestionTitle('Please click on Continue to end current experiment'));
+        this.elements.textElem.append(createSectionTitle('End of Experiment'))
+            .append(createQuestionTitle('Please click on Continue to end current experiment'));
     }
     storeResults() {
         const str = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.data));

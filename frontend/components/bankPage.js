@@ -7,7 +7,7 @@ import {RandomizedQuestions} from "../assets/questions/shuffleQuestions";
 import {EndPage} from "./endPage";
 import {QuestionPage} from "./questionPage";
 import {GroupTypeUtils} from "../storage/store";
-import {CreateExplanation, CreateQuestionTitle, CreateSectionTitle} from "./miscObjects";
+import {createExplanation, createQuestionTitle, createSectionTitle} from "./miscObjects";
 
 function generateCountDownText(num) {
     return `After ${num} seconds, you may continue`;
@@ -162,7 +162,7 @@ export class BankPage extends BasePage {
         this.renderTimeCountDown();
     }
     renderBank() {
-        this.elements.textElem.append(CreateSectionTitle('Bank Results'));
+        this.elements.textElem.append(createSectionTitle('Bank Results'));
         const data = this.data.RoundRewardsHistory.map(obj => {
             return [obj.questionNumber, obj.amount];
         });
@@ -178,16 +178,16 @@ export class BankPage extends BasePage {
                 chart.init(args);
             });
         const currentRound = this.data.RoundRewardsHistory.reduce((acc, curr) => acc + curr.amount, 0);
-        this.elements.graphElem.append(CreateQuestionTitle('Summary'))
-            .append(CreateExplanation(`Net reward from this round: ${currentRound.toFixed(2)}`))
-            .append(CreateExplanation(`Previous bank balance: ${this.data.TotalBankBalance}`))
-            .append(CreateExplanation(`Total Reward from all completed rounds: ${(currentRound + this.data.TotalBankBalance).toFixed(2)}`))
+        this.elements.graphElem.append(createQuestionTitle('Summary'))
+            .append(createExplanation(`Net reward from this round: ${currentRound.toFixed(2)}`))
+            .append(createExplanation(`Previous bank balance: ${this.data.TotalBankBalance}`))
+            .append(createExplanation(`Total Reward from all completed rounds: ${(currentRound + this.data.TotalBankBalance).toFixed(2)}`))
             .append($('<hr>'));
     }
     renderTimeCountDown() {
         const countDownElem = $('<div class="timer-indicator"><div class="loading"></div></div>');
         const countDownBanner = $('<div class="timer-countdown"></div>');
-        const countDownNotice = CreateQuestionTitle('Please do not switch to another web page or desktop application');
+        const countDownNotice = createQuestionTitle('Please do not switch to another web page or desktop application');
         countDownBanner.html(generateCountDownText(Config.breakDuration));
         const wrapper = $('<div class="timer-wrapper"></div>');
         wrapper.append(countDownBanner).append(countDownElem);

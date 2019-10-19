@@ -1,5 +1,5 @@
 import {BasePage} from "./baseObject";
-import {CreateOption, CreateQuestionTitle, CreateSectionTitle} from "./miscObjects";
+import {createOption, createQuestionTitle, createSectionTitle} from "./miscObjects";
 import {GroupTypeUtils, Response} from "../storage/store";
 import {LinearSlider, ParabolicSlider} from "./graphObject";
 import {EndPage} from "./endPage";
@@ -12,9 +12,9 @@ export class QuestionPage extends BasePage {
         super(elements);
 
         this.graph = null;
-        this.sectionTitle = CreateSectionTitle('');
-        this.questionTitle = CreateQuestionTitle('');
-        this.optionsElem = CreateOption();
+        this.sectionTitle = createSectionTitle('');
+        this.questionTitle = createQuestionTitle('');
+        this.optionsElem = createOption();
 
         elements.textElem.append(this.sectionTitle)
             .append(this.questionTitle)

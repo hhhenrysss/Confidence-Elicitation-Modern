@@ -17,7 +17,7 @@ class Survey {
         this.elems.errorElem.hide();
     }
     init() {
-        // this.results.Type = GroupType.parabolicWithBank;
+        // this.results.Type = groupType.parabolicWithBank;
         // this.results.RoundRewardsHistory = new Array(10).fill(undefined).map((_, idx) => {
         //     return {
         //         questionNumber: idx,

@@ -1,5 +1,5 @@
 import {BasePage} from "./baseObject";
-import {CreateExplanation, CreateSectionTitle} from "./miscObjects";
+import {createExplanation, createSectionTitle} from "./miscObjects";
 import {TutorialPage} from "./tutorialPage";
 import {IntroductionStatements} from "../assets/questions/introductionStatements";
 
@@ -10,10 +10,10 @@ export class StartPage extends BasePage {
         this.elements = elements;
         this.data = data;
 
-        const elem = elements.textElem.append(CreateSectionTitle('INSTRUCTIONS'));
+        const elem = elements.textElem.append(createSectionTitle('INSTRUCTIONS'));
         const instructions = IntroductionStatements[this.data.Type];
         for (const instruction of instructions) {
-            elem.append(CreateExplanation(instruction));
+            elem.append(createExplanation(instruction));
         }
     }
     canProceed() {

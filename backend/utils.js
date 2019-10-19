@@ -6,8 +6,33 @@ const {promisify} = require('util');
 const stat = promisify(fs.stat);
 const writeFile = promisify(fs.writeFile);
 
-module.exports.getIndexAndGroup = function getIndexAndGroup(req) {
-    return [req.query.participantId, req.query.group];
+const cookieKey = 'participant';
+
+module.exports.cookieUtils = {
+    getIndexAndGroup(req) {
+        try {
+            const data = JSON.parse(req.signedCookies[cookieKey]);
+            return [data.participantId, data.group];
+        } catch (e) {
+            return [null, null];
+        }
+    },
+    createCookie(participant, res) {
+        res.cookie(cookieKey, JSON.stringify(participant), {
+            path: '/',
+            maxAge: 86400 * 1000 * 100, // 100 days
+            httpOnly: true,
+            signed: true
+        });
+    },
+    clearCookie(res) {
+        res.cookie(cookieKey, '', {
+            path: '/',
+            maxAge: 0,
+            httpOnly: true,
+            signed: true
+        });
+    }
 };
 
 module.exports.isIDExist = function isIDExist(str, group) {
@@ -17,6 +42,10 @@ module.exports.isIDExist = function isIDExist(str, group) {
         }
     }
     return false;
+};
+
+module.exports.isFileExist = function isFileExist(filePath) {
+    return stat(filePath).then(() => true).catch(() => false);
 };
 
 module.exports.storeFile = function storeFile(request) {

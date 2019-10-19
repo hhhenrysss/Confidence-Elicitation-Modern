@@ -1,4 +1,4 @@
-module.exports = {
+module.exports.groupType = {
     linearWithBank: 'ABC',
     parabolicWithBank: 'BCD',
     linearNoBank: 'CDE',

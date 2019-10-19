@@ -1,5 +1,5 @@
 module.exports.NextIDResponse = class NextIDResponse {
-    constructor(data, errorMsg) {
+    constructor(data, errorMsg = null) {
         this.data = data;
         this.errorMsg = errorMsg;
     }
@@ -12,7 +12,7 @@ module.exports.ValidIDResponse = class ValidIDResponse {
 };
 
 module.exports.UploadResponse = class UploadResponse {
-    constructor(isUploaded, errorMsg) {
+    constructor(isUploaded, errorMsg = null) {
         this.isUploaded = isUploaded;
         this.errorMsg = errorMsg;
     }

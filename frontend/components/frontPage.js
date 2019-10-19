@@ -1,7 +1,8 @@
 import $ from "jquery";
+import axios from 'axios';
 import {BasePage} from "./baseObject";
-import {CreateExplanation, CreateOption, CreateQuestionTitle, CreateSectionTitle} from "./miscObjects";
-import {GroupType, GroupTypeUtils} from "../storage/store";
+import {createBanner, createExplanation, createOption, createQuestionTitle, createSectionTitle} from "./miscObjects";
+import {groupType, GroupTypeUtils} from "../storage/store";
 import {StartPage} from "./startPage";
 
 export class FrontPage extends BasePage{
@@ -9,19 +10,19 @@ export class FrontPage extends BasePage{
         super(elements);
 
         const inputElem = $('<input type="text">');
-        const options = CreateOption([
-            {name: `Group 1: ${GroupType.linearNoBank}`, value: GroupType.linearNoBank},
-            {name: `Group 2: ${GroupType.linearWithBank}`, value: GroupType.linearWithBank},
-            {name: `Group 3: ${GroupType.parabolicNoBank}`, value: GroupType.parabolicNoBank},
-            {name: `Group 4: ${GroupType.parabolicWithBank}`, value: GroupType.parabolicWithBank}
+        const options = createOption([
+            {name: `Group 1: ${groupType.linearNoBank}`, value: groupType.linearNoBank},
+            {name: `Group 2: ${groupType.linearWithBank}`, value: groupType.linearWithBank},
+            {name: `Group 3: ${groupType.parabolicNoBank}`, value: groupType.parabolicNoBank},
+            {name: `Group 4: ${groupType.parabolicWithBank}`, value: groupType.parabolicWithBank}
         ]);
 
         elements.textElem
-            .append(CreateSectionTitle('Testing Website for the Confidence Elicitation Project'))
-            .append(CreateExplanation('You must enter the subject ID string and group.'))
-            .append(CreateQuestionTitle('Please enter the subject ID.'))
+            .append(createSectionTitle('Testing Website for the Confidence Elicitation Project'))
+            .append(createExplanation('You must enter the subject ID string and group.'))
+            .append(createQuestionTitle('Please enter the subject ID.'))
             .append(inputElem)
-            .append(CreateQuestionTitle('Please select the subject group.'))
+            .append(createQuestionTitle('Please select the subject group.'))
             .append(options.jQueryObj);
 
 
@@ -32,15 +33,38 @@ export class FrontPage extends BasePage{
 
         this.elements = elements;
         this.data = data;
+
+        axios.get('/next-id')
+            .then(response => {
+                const data = response.data;
+                if (data.errorMsg != null) {
+                    console.error(data.errorMsg);
+                } else {
+                    const id = data.data.participantId;
+                    const group = data.data.group;
+                    const bannerElem = createBanner(
+                        `Current participant has ID ${id} with group ${group}`,
+                        `Use this ID and Group`,
+                        `Cancel`,
+                        () => {
+                            this.inputElem.val(id);
+                            this.options.value = group;
+                            bannerElem.jQueryObj.remove();
+                        }
+                    );
+                    elements.textElem.prepend(bannerElem.jQueryObj);
+                }
+            })
+            .catch(err => console.error(err));
     }
 
     // public methods
     canProceed() {
         const inputText = this.inputElem.val();
         const groupValue = this.options.value;
-        if (inputText !== '' && GroupTypeUtils.isGroupType(value)) {
+        if (inputText !== '' && GroupTypeUtils.isGroupType(groupValue)) {
             this.subjectID = inputText;
-            this.groupSelectResult = value;
+            this.groupSelectResult = groupValue;
             super.hideErrorMessage();
             return true;
         }
@@ -51,7 +75,7 @@ export class FrontPage extends BasePage{
     record() {
         this.data.SubjectID = this.subjectID;
         this.data.Type = this.groupSelectResult;
-        this.data.ReadableType = Object.keys(GroupType).find(key => GroupType[key] === this.groupSelectResult);
+        this.data.ReadableType = Object.keys(groupType).find(key => groupType[key] === this.groupSelectResult);
     }
 
     nextElement() {

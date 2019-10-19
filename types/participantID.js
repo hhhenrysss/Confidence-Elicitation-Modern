@@ -1,6 +1,6 @@
-module.exports = class Participant {
+module.exports.Participant = class Participant {
     constructor(num, groupType) {
-        this.participantId = `${num}`;
+        this.participantId = typeof num === 'number' ? `${num}` : num;
         this.group = groupType;
     }
 };

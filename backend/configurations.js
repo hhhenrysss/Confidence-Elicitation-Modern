@@ -1,17 +1,17 @@
-const GroupType = require('../types/groupType');
-const Participant = require('../types/participantID');
+const {groupType} = require('../types/groupType');
+const {Participant} = require('../types/participantID');
 
-function participant(...args) {
-    return new Participant(args);
+function creareParticipant(num, groupType) {
+    return new Participant(num, groupType);
 }
 
-module.exports = [
-    participant(1, GroupType.linearNoBank),
-    participant(2, GroupType.linearNoBank),
-    participant(3, GroupType.linearWithBank),
-    participant(4, GroupType.linearWithBank),
-    participant(5, GroupType.parabolicNoBank),
-    participant(6, GroupType.parabolicNoBank),
-    participant(7, GroupType.parabolicWithBank),
-    participant(8, GroupType.parabolicWithBank)
+module.exports.participantsList = [
+    creareParticipant(1, groupType.linearNoBank),
+    creareParticipant(2, groupType.linearNoBank),
+    creareParticipant(3, groupType.linearWithBank),
+    creareParticipant(4, groupType.linearWithBank),
+    creareParticipant(5, groupType.parabolicNoBank),
+    creareParticipant(6, groupType.parabolicNoBank),
+    creareParticipant(7, groupType.parabolicWithBank),
+    creareParticipant(8, groupType.parabolicWithBank)
 ];

@@ -38,13 +38,13 @@ export class SurveyResults {
     }
 }
 
-export const GroupType = require('../../types/groupType');
+export const groupType = require('../../types/groupType').groupType;
 
 export const GroupTypeUtils = {
-    groupTypeValuesSet: new Set(Object.values(GroupType)),
-    linearValuesSet: new Set([GroupType.linearWithBank, GroupType.linearNoBank]),
-    parabolicValuesSet: new Set([GroupType.parabolicWithBank, GroupType.parabolicNoBank]),
-    bankValuesSet: new Set([GroupType.linearWithBank, GroupType.parabolicWithBank]),
+    groupTypeValuesSet: new Set(Object.values(groupType)),
+    linearValuesSet: new Set([groupType.linearWithBank, groupType.linearNoBank]),
+    parabolicValuesSet: new Set([groupType.parabolicWithBank, groupType.parabolicNoBank]),
+    bankValuesSet: new Set([groupType.linearWithBank, groupType.parabolicWithBank]),
     /**
      * @return {boolean}
      */
