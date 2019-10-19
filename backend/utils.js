@@ -48,12 +48,12 @@ module.exports.isFileExist = function isFileExist(filePath) {
     return stat(filePath).then(() => true).catch(() => false);
 };
 
-module.exports.storeFile = function storeFile(request) {
+module.exports.storeFile = function storeFile(requestedData, req) {
     const errorMsg = {errorMsg: null, isFileExist: false};
-    const fileName = request.participantId + request.group;
-    const completePath = path.resolve(__dirname, './data', fileName);
+    const fileName = module.exports.cookieUtils.getIndexAndGroup(req).join('') + '.json';
+    const completePath = path.resolve(__dirname, './data/' + fileName);
     return stat(completePath).then(() => {
-        errorMsg.errorMsg = 'File already exists';
+        errorMsg.errorMsg = 'File with the same participant ID and group exist. Cannot store the file remotely.';
         errorMsg.isFileExist = true;
         return Promise.reject(errorMsg);
     }).catch(err => {
@@ -61,16 +61,16 @@ module.exports.storeFile = function storeFile(request) {
             return Promise.reject(errorMsg);
         }
         if (err.code === 'ENOENT') {
-            return writeFile(completePath, JSON.stringify(request.data));
+            return writeFile(completePath, JSON.stringify(requestedData.data));
         }
-        errorMsg.errorMsg = 'Unknown Error Occurred: ' + err.code;
+        errorMsg.errorMsg = 'Unknown error occurred: ' + err.code;
         return Promise.reject(errorMsg);
     }).catch(err => {
         if (errorMsg.errorMsg != null) {
             return Promise.reject(errorMsg);
         }
         if (err != null) {
-            errorMsg.errorMsg = 'Unknown Error Occurred: ' + err.code;
+            errorMsg.errorMsg = 'Unknown error occurred while trying to write to file: ' + err.code;
             return Promise.reject(errorMsg);
         }
     })

@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
 const {participantsList} = require('./configurations');
 const {NextIDResponse, UploadResponse, ValidIDResponse} = require('../types/responseType');
@@ -37,7 +38,7 @@ app.get('/next-id', (req, res) => {
         utils.cookieUtils.clearCookie(res);
         return res.json(new NextIDResponse(null, 'End of List'));
     } else {
-        return res.json(new NextIDResponse(null, 'ID does not exist in ID'));
+        return res.json(new NextIDResponse(null, 'Previous experiments involve IDs outside predefined lists. This reminder cannot be used.'));
     }
 });
 
@@ -52,21 +53,17 @@ app.get('/validate-id', (req, res) => {
     });
 });
 
-app.post('/new-response', (req, res) => {
-    const [str, group] = utils.cookieUtils.getIndexAndGroup(req);
-    const data = req.query.data;
-    if (utils.isIDExist(str, group)) {
-        return utils.storeFile(new UploadRequest(str, group, data))
-            .catch(err => {
-                if (err.errorMsg == null) {
-                    return res.json(new UploadResponse(true, null));
-                } else {
-                    return res.json(new UploadResponse(false, err.errorMsg));
-                }
-            })
-    } else {
-        return res.json(new UploadResponse(false, 'Previous experiments involve IDs outside predefined lists. This reminder cannot be used.'));
-    }
+const jsonParser = bodyParser.json();
+app.post('/new-response', jsonParser, (req, res) => {
+    return utils.storeFile(new UploadRequest(req.body), req)
+        .then(() => res.json(new UploadResponse(null)))
+        .catch(err => {
+            if (err.errorMsg == null) {
+                return res.json(new UploadResponse(null));
+            } else {
+                return res.json(new UploadResponse(err.errorMsg));
+            }
+        });
 });
 
 app.listen('8000');

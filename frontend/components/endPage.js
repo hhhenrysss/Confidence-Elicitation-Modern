@@ -1,6 +1,9 @@
 import $ from 'jquery';
+import axios from 'axios';
 import {BasePage} from "./baseObject";
 import {createQuestionTitle, createSectionTitle} from "./miscObjects";
+
+const {UploadRequest} = require("../../types/requestType");
 
 export class EndPage extends BasePage {
     constructor(elements, data) {
@@ -12,7 +15,7 @@ export class EndPage extends BasePage {
         this.elements.textElem.append(createSectionTitle('End of Experiment'))
             .append(createQuestionTitle('Please click on Continue to end current experiment'));
     }
-    storeResults() {
+    storeResultsLocal() {
         const str = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.data));
         const node = document.createElement('a');
         node.setAttribute("href", str);
@@ -21,12 +24,23 @@ export class EndPage extends BasePage {
         node.click();
         node.remove();
     }
+    storeResultsRemote() {
+        return axios.post('/new-response', new UploadRequest(this.data));
+    }
     canProceed() {
-        return true;
+        this.storeResultsLocal();
+        return this.storeResultsRemote().then(response => {
+            const res = response.data;
+            if (res.errorMsg != null) {
+                super.addErrorMessage(res.errorMsg);
+                return false;
+            } else {
+                super.hideErrorMessage();
+                return true;
+            }
+        });
     }
-    record() {
-        this.storeResults();
-    }
+    record() {}
     nextElement() {
         $('#root').html(`
         <div style="display: flex; flex-direction: row; align-items: center;">

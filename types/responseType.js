@@ -12,8 +12,7 @@ module.exports.ValidIDResponse = class ValidIDResponse {
 };
 
 module.exports.UploadResponse = class UploadResponse {
-    constructor(isUploaded, errorMsg = null) {
-        this.isUploaded = isUploaded;
+    constructor(errorMsg = null) {
         this.errorMsg = errorMsg;
     }
 };
