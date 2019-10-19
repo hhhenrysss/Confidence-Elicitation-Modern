@@ -43,7 +43,7 @@ export class FrontPage extends BasePage{
                     const bannerElem = createBanner(
                         data.errorMsg,
                         `Start New`,
-                        `Cancel`,
+                        `Dismiss`,
                         () => {
                             // refresh page
                             window.onbeforeunload = null;
@@ -58,7 +58,7 @@ export class FrontPage extends BasePage{
                     const bannerElem = createBanner(
                         `Current participant has ID ${id} with group ${group}`,
                         `Use this ID and Group`,
-                        `Cancel`,
+                        `Dismiss`,
                         () => {
                             this.inputElem.val(id);
                             this.options.value = group;

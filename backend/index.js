@@ -65,7 +65,7 @@ app.post('/new-response', (req, res) => {
                 }
             })
     } else {
-        return res.json(new UploadResponse(false, 'ID does not exist'));
+        return res.json(new UploadResponse(false, 'Previous experiments involve IDs outside predefined lists. This reminder cannot be used.'));
     }
 });
 

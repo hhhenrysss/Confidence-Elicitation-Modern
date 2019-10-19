@@ -1,4 +1,5 @@
 .banner-wrapper {
+    margin-bottom: 1em;
     display: flex;
     flex-direction: row;
     padding: 1em;
