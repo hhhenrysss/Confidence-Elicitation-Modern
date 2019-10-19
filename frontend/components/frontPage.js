@@ -5,6 +5,8 @@ import {createBanner, createExplanation, createOption, createQuestionTitle, crea
 import {groupType, GroupTypeUtils} from "../storage/store";
 import {StartPage} from "./startPage";
 
+import '../assets/styles/banner_style.css';
+
 export class FrontPage extends BasePage{
     constructor(elements, data) {
         super(elements);
@@ -38,7 +40,18 @@ export class FrontPage extends BasePage{
             .then(response => {
                 const data = response.data;
                 if (data.errorMsg != null) {
-                    console.error(data.errorMsg);
+                    const bannerElem = createBanner(
+                        data.errorMsg,
+                        `Start New`,
+                        `Cancel`,
+                        () => {
+                            // refresh page
+                            window.onbeforeunload = null;
+                            location.reload(true);
+                        }
+                    );
+                    bannerElem.addRed();
+                    elements.textElem.prepend(bannerElem.jQueryObj);
                 } else {
                     const id = data.data.participantId;
                     const group = data.data.group;
@@ -52,10 +65,13 @@ export class FrontPage extends BasePage{
                             bannerElem.jQueryObj.remove();
                         }
                     );
+                    bannerElem.addBlue();
                     elements.textElem.prepend(bannerElem.jQueryObj);
                 }
             })
-            .catch(err => console.error(err));
+            .catch(err => {
+                console.error(err);
+            });
     }
 
     // public methods

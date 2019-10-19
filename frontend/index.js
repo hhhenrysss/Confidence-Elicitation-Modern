@@ -25,10 +25,15 @@ class Survey {
         //     }
         // });
         // new BankPage(this.elems, this.results, 0);
+        let isFirstPage = true;
         let currentPage = new FrontPage(this.elems, this.results);
         const body = $('html, body');
         this.elems.buttonElem.click(() => {
             if (currentPage.canProceed()) {
+                if (isFirstPage) {
+                    window.onbeforeunload = () => "Your previous answers will be lost";
+                    isFirstPage = false;
+                }
                 currentPage.record();
                 currentPage = currentPage.nextElement();
                 body.animate({scrollTop: 0}, 200);
@@ -42,7 +47,7 @@ class Survey {
 }
 
 $(() => {
-    window.onbeforeunload = () => "Your previous answers will be lost";
+
 
     $('#root').empty().append($.parseHTML(
         `

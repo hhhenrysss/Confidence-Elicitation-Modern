@@ -81,6 +81,14 @@ class BannerElement {
     get jQueryObj() {
         return this.element;
     }
+    addBlue() {
+        this.element.addClass('blue');
+        this.element.removeClass('red');
+    }
+    addRed() {
+        this.element.addClass('red');
+        this.element.removeClass('blue');
+    }
 }
 
 export function createBanner(mainText, confirmText, closeText, confirmHandler) {
