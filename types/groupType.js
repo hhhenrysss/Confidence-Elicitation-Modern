@@ -1,7 +1,7 @@
 module.exports.groupType = {
-    linearWithBank: 'ABC',
-    parabolicWithBank: 'BCD',
-    linearNoBank: 'CDE',
-    parabolicNoBank: 'DEF'
+    linearWithBank: 'Linear Slider with Bank',
+    parabolicWithBank: 'Parabolic Slider with Bank',
+    linearNoBank: 'Linear Slider',
+    parabolicNoBank: 'Parabolic Slider'
 };
 
