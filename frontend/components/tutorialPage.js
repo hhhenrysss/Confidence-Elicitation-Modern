@@ -1,5 +1,5 @@
 import {BasePage} from "./baseObject";
-import {createExplanation, createOption, createQuestionTitle, createSectionTitle} from "./miscObjects";
+import {createBanner, createExplanation, createOption, createQuestionTitle, createSectionTitle} from "./miscObjects";
 import {GroupTypeUtils, Response} from "../storage/store";
 import {TutorialQuestions} from "../assets/questions/tutorialQuestions";
 import {LinearSlider, ParabolicSlider} from "./graphObject";
@@ -16,8 +16,11 @@ export class TutorialPage extends BasePage{
         const sectionTitleElem = createSectionTitle('');
         const questionTitleElem = createQuestionTitle('');
         const optionsElem = createOption();
+        const bannerElem = createBanner('This question is only for practice and will not count toward your total balance');
+        bannerElem.addRed();
 
-        elements.textElem.append(sectionTitleElem)
+        elements.textElem.append(bannerElem)
+            .append(sectionTitleElem)
             .append(questionTitleElem)
             .append(optionsElem.jQueryObj);
 

@@ -68,14 +68,16 @@ class BannerElement {
     constructor(mainText, confirmText, closeText, confirmHandler) {
         const wrapper = $('<div class="banner-wrapper"></div>');
         const main = $(`<div class="banner-main-text">${mainText}</div>`);
-        const actionsWrapper = $('<div class="banner-actions-wrapper"></div>');
-        const confirmAction = $(`<button class="banner-action-button">${confirmText}</button>`);
-        const closeAction = $(`<button class="banner-action-button">${closeText}</button>`);
 
-        wrapper.append(main).append(actionsWrapper.append(confirmAction).append(closeAction));
-        confirmAction.click(() => confirmHandler());
-        closeAction.click(() => wrapper.remove());
-
+        wrapper.append(main);
+        if (confirmText != null && closeText != null && confirmHandler != null) {
+            const actionsWrapper = $('<div class="banner-actions-wrapper"></div>');
+            const confirmAction = $(`<button class="banner-action-button">${confirmText}</button>`);
+            const closeAction = $(`<button class="banner-action-button">${closeText}</button>`);
+            confirmAction.click(() => confirmHandler());
+            closeAction.click(() => wrapper.remove());
+            wrapper.append(actionsWrapper.append(confirmAction).append(closeAction));
+        }
         this.element = wrapper;
     }
     get jQueryObj() {
