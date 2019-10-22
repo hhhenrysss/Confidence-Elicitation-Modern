@@ -16,7 +16,7 @@ export class TutorialPage extends BasePage{
         const sectionTitleElem = createSectionTitle('');
         const questionTitleElem = createQuestionTitle('');
         const optionsElem = createOption();
-        const bannerElem = createBanner('This question is only for practice and will not count toward your total balance');
+        const bannerElem = createBanner(`This question is only for <strong>practice</strong> and will not count toward your total balance`);
         bannerElem.addRed();
 
         elements.textElem.append(bannerElem)
