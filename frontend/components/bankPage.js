@@ -10,7 +10,7 @@ import {GroupTypeUtils} from "../storage/store";
 import {createExplanation, createQuestionTitle, createSectionTitle} from "./miscObjects";
 
 function generateCountDownText(num) {
-    return `After ${num} seconds, you may continue`;
+    return `After ${num} seconds, the page will automatically jump to the next section`;
 }
 
 
@@ -203,6 +203,7 @@ export class BankPage extends BasePage {
         timer.addEventListener('targetAchieved', () => {
             wrapper.remove();
             countDownNotice.remove();
+            this.elements.buttonElem.trigger('click');
             this.elements.buttonElem.show();
         });
     }
