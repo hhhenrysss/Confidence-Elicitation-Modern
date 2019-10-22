@@ -16,8 +16,8 @@ export class ParabolicSlider extends BaseSlider {
         super();
         this.parentElem = parentElem;
         this.slider = null;
-        this.circle_x = -1;
-        this.circle_y = -1;
+        this.circle_x = 0;
+        this.circle_y = 0;
 
         this.initializeSlider()
     }
@@ -140,6 +140,23 @@ export class ParabolicSlider extends BaseSlider {
             .attr("d", line);
 
         // create handle
+        const cx = 0;
+        const cy = 0;
+        container.select("g.dot").attr("style", "display:block");
+
+        that.circle_x = Math.min(cx, 130);
+        that.circle_y = Math.min(cy, 390);
+        if (!clicked) {
+            d3.select('g.dot circle')
+                .attr("cx", that.circle_x)
+                .attr("cy", that.circle_y);
+            transformedBackground.select("rect[id='horizontal']")
+                .attr("width", Math.min(cx, width));
+            transformedBackground.select("rect[id='vertical']")
+                .attr("height", Math.min(cy, height));
+            clicked = true;
+        }
+
         const drag = d3.behavior.drag()
             .origin(d => d)
             .on("drag", function dragged() {
@@ -173,26 +190,6 @@ export class ParabolicSlider extends BaseSlider {
                 return d3.mouse(this);
             });
 
-        //mouse click
-        svgBaseElem.on("click", function click_on_canvas() {
-                const coords = d3.mouse(this);
-                const cx = Math.min(Math.max(coords[0] - 50, 0), 140);
-                const cy = Math.min(Math.max(0.023 * cx * cx, 0), 440);
-                container.select("g.dot").attr("style", "display:block");
-
-                that.circle_x = Math.min(cx, 130);
-                that.circle_y = Math.min(cy, 390);
-                if (!clicked) {
-                    d3.select('g.dot circle')
-                        .attr("cx", that.circle_x)
-                        .attr("cy", that.circle_y);
-                    transformedBackground.select("rect[id='horizontal']")
-                        .attr("width", Math.min(cx, width));
-                    transformedBackground.select("rect[id='vertical']")
-                        .attr("height", Math.min(cy, height));
-                    clicked = true;
-                }
-            });
     }
 
     getSlider() {
