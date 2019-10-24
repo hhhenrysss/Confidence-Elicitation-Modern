@@ -4,6 +4,7 @@ import {GroupTypeUtils, Response} from "../storage/store";
 import {TutorialQuestions} from "../assets/questions/tutorialQuestions";
 import {LinearSlider, ParabolicSlider} from "./graphObject";
 import {QuestionPage} from "./questionPage";
+import {Time} from "../utils";
 
 export class TutorialPage extends BasePage{
     constructor(elements, data) {
@@ -53,6 +54,7 @@ export class TutorialPage extends BasePage{
         for (let i = 1; i < question[this.data.Type].length; i += 1) {
             this.elements.graphElem.append(createExplanation(question[this.data.Type][i]));
         }
+        Time.setTime();
     }
     canProceed() {
         const selectedOption = this.optionsElem.value;
@@ -68,9 +70,17 @@ export class TutorialPage extends BasePage{
     }
     record() {
         const question = TutorialQuestions[this.currentContentIndex];
+        const currentTime = Time.currentTime();
         this.data.TutorialResponses.push(
-            new Response(question.id, question.correctAnswer, this.selectedOption, this.selectedChartData)
-        )
+            new Response(
+                question.id,
+                question.correctAnswer,
+                this.selectedOption,
+                this.selectedChartData,
+                currentTime - Time.storedTime
+            )
+        );
+        Time.storedTime = currentTime;
     }
     nextElement() {
         if (this.currentContentIndex === TutorialQuestions.length - 1) {

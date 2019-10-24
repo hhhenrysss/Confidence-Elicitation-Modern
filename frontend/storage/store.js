@@ -1,8 +1,9 @@
 export class Response {
-    constructor(questionID, correctAnswer, attemptedAnswer, graphValue) {
+    constructor(questionID, correctAnswer, attemptedAnswer, graphValue, timeSpent) {
         this.questionID = questionID;
         this.correctAnswer = correctAnswer;
         this.attemptedAnswer = attemptedAnswer;
+        this.timeSpent = timeSpent;
         this.graphValue = typeof graphValue === 'number' ? graphValue : graphValue.x;
         this.brierScore = this.calculateBrier();
     }

@@ -6,6 +6,7 @@ import {EndPage} from "./endPage";
 import {RandomizedQuestions} from "../assets/questions/shuffleQuestions";
 import {Config} from "../configurations";
 import {BankPage} from "./bankPage";
+import {Time} from "../utils";
 
 export class QuestionPage extends BasePage {
     constructor(elements, data, currentIndex = 0) {
@@ -47,6 +48,7 @@ export class QuestionPage extends BasePage {
         this.graph = GroupTypeUtils.isLinear(this.data.Type) ?
             new LinearSlider(this.elements.graphElem) : new ParabolicSlider(this.elements.graphElem);
         this.elements.graphElem.append(this.graph);
+        Time.setTime();
     }
 
     canProceed() {
@@ -64,7 +66,15 @@ export class QuestionPage extends BasePage {
 
     record() {
         const question = RandomizedQuestions[this.currentIndex];
-        const response = new Response(question.index, question.answer, this.selectedOption, this.selectedChartData);
+        const currentTime = Time.currentTime();
+        const response = new Response(
+            question.index,
+            question.answer,
+            this.selectedOption,
+            this.selectedChartData,
+            currentTime - Time.storedTime
+        );
+        Time.storedTime = currentTime;
         this.data.Responses.push(response);
         this.data.RoundRewardsHistory.push({
             questionNumber: this.currentIndex + 1,
