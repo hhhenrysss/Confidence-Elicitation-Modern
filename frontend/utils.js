@@ -8,3 +8,8 @@ export const Time = {
         this.storedTime = this.currentTime();
     }
 };
+
+export function reload() {
+    window.onbeforeunload = null;
+    window.location.reload(true);
+}

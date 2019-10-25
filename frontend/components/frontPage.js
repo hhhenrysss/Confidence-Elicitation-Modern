@@ -6,6 +6,7 @@ import {groupType, GroupTypeUtils} from "../storage/store";
 import {StartPage} from "./startPage";
 
 import '../assets/styles/banner_style.css';
+import {reload} from "../utils";
 
 export class FrontPage extends BasePage{
     constructor(elements, data) {
@@ -46,8 +47,7 @@ export class FrontPage extends BasePage{
                         `Dismiss`,
                         () => {
                             // refresh page
-                            window.onbeforeunload = null;
-                            location.reload(true);
+                            reload();
                         }
                     );
                     bannerElem.addRed();

@@ -4,6 +4,7 @@ import {FrontPage} from "./components/frontPage";
 
 import './assets/styles/style.css';
 import {BankPage} from "./components/bankPage";
+import {reload} from "./utils";
 
 class Survey {
     constructor() {
@@ -40,8 +41,7 @@ class Survey {
                     body.animate({scrollTop: 0}, 200);
                 }
                 if (currentPage == null) {
-                    window.onbeforeunload = null;
-                    location.reload(true);
+                    reload();
                 }
             });
         });
@@ -49,18 +49,14 @@ class Survey {
 }
 
 $(() => {
-
-
-    $('#root').empty().append($.parseHTML(
-        `
+    $('#root').empty().append($.parseHTML(`
         <div id="question-text"></div>
         <div id="question-graph"></div>
         <div id="actions">
             <button id="proceed-next-section">Continue</button>
             <div id="proceed-error-msg"></div>
         </div>
-        `
-    ));
+    `));
     const survey = new Survey();
     survey.init();
 });
