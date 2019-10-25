@@ -12,8 +12,11 @@ export class EndPage extends BasePage {
         this.elements = elements;
         this.data = data;
 
+        this.isClickFirstTime = true;
+        this.propmt = createQuestionTitle('Please click on Continue to store experiment results');
+
         this.elements.textElem.append(createSectionTitle('End of Experiment'))
-            .append(createQuestionTitle('Please click on Continue to end current experiment'));
+            .append(this.propmt);
     }
     storeResultsLocal() {
         const str = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.data));
@@ -28,17 +31,22 @@ export class EndPage extends BasePage {
         return axios.post('/new-response', new UploadRequest(this.data));
     }
     canProceed() {
-        this.storeResultsLocal();
-        return this.storeResultsRemote().then(response => {
-            const res = response.data;
-            if (res.errorMsg != null) {
-                super.addErrorMessage(res.errorMsg);
+        if (this.isClickFirstTime) {
+            this.storeResultsLocal();
+            this.isClickFirstTime = false;
+            return this.storeResultsRemote().then(response => {
+                const res = response.data;
+                if (res.errorMsg != null) {
+                    super.addErrorMessage(res.errorMsg);
+                } else {
+                    this.propmt.html('Please click on Continue to end current experiment');
+                    super.hideErrorMessage();
+                }
                 return false;
-            } else {
-                super.hideErrorMessage();
-                return true;
-            }
-        });
+            });
+        } else {
+            return Promise.resolve(true);
+        }
     }
     record() {}
     nextElement() {
