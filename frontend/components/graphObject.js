@@ -44,7 +44,6 @@ export class ParabolicSlider extends BaseSlider {
         const margin = {top: 20, right: 20, bottom: 30, left: 50};
         const width = 200 - margin.left - margin.right;
         const height = 440 - margin.top - margin.bottom;
-        let clicked = false;
         const handle1 = [{x: 0, y: 0}];
         const data = this.generateData();
 
@@ -70,8 +69,8 @@ export class ParabolicSlider extends BaseSlider {
         x.domain(d3.extent(data, d => d.q));
         y.domain(d3.extent(data, d => d.p));
 
-        transformedBackground.append("g").attr("class", "x axis").call(xAxis);
-        transformedBackground.append("g").attr("class", "y axis").call(yAxis);
+        transformedBackground.append("g").attr("class", "x axis").style("pointer-events", "none").call(xAxis);
+        transformedBackground.append("g").attr("class", "y axis").style("pointer-events", "none").call(yAxis);
 
         //label of axis (text is styled with css)
         const padding = 2;
@@ -111,7 +110,8 @@ export class ParabolicSlider extends BaseSlider {
             .attr("height", 10)
             .attr("fill", "green")
             .attr("id", "horizontal")
-            .attr("opacity", 0.3);
+            .attr("opacity", 0.3)
+            .style("pointer-events", "none");
 
         //create vertical color bar
         const vertical_bar = container.append("rect")
@@ -122,7 +122,8 @@ export class ParabolicSlider extends BaseSlider {
             .attr("height", 0)
             .attr("fill", "red")
             .attr("id", "vertical")
-            .attr("opacity", 0.3);
+            .attr("opacity", 0.3)
+            .style("pointer-events", "none");
 
         container.append("use")
             .attr("id", 'use')
@@ -140,22 +141,6 @@ export class ParabolicSlider extends BaseSlider {
             .attr("d", line);
 
         // create handle
-        const cx = 0;
-        const cy = 0;
-        container.select("g.dot").attr("style", "display:block");
-
-        that.circle_x = Math.min(cx, 130);
-        that.circle_y = Math.min(cy, 390);
-        if (!clicked) {
-            d3.select('g.dot circle')
-                .attr("cx", that.circle_x)
-                .attr("cy", that.circle_y);
-            transformedBackground.select("rect[id='horizontal']")
-                .attr("width", Math.min(cx, width));
-            transformedBackground.select("rect[id='vertical']")
-                .attr("height", Math.min(cy, height));
-            clicked = true;
-        }
 
         const drag = d3.behavior.drag()
             .origin(d => d)
@@ -171,25 +156,34 @@ export class ParabolicSlider extends BaseSlider {
                     .attr("cy", that.circle_y);
                 horizontal_bar.attr("width", Math.min(cx, width));
                 vertical_bar.attr("height", Math.min(cy, height));
-                clicked = false;
             });
 
         container.append("g")
             .attr("id", "handle_circle")
             .attr("class", "dot")
-            .attr("style", "display:none")
             .selectAll('circle')
             .data(handle1)
             .enter().append("circle")
-            .attr("r", 3)
+            .attr("r", 5)
             .attr("cx", d => d.x)
             .attr("cy", d => d.y)
             .call(drag);
 
-        svgBaseElem.on("mousemove", function findTheMouse () {
-                return d3.mouse(this);
-            });
+        svgBaseElem.on("mousemove", function findTheMouse () { return d3.mouse(this); });
 
+        const cx = 0;
+        const cy = 0;
+        container.select("g.dot").attr("style", "display:block");
+
+        that.circle_x = Math.min(cx, 130);
+        that.circle_y = Math.min(cy, 390);
+        d3.select('g.dot circle')
+            .attr("cx", that.circle_x)
+            .attr("cy", that.circle_y);
+        transformedBackground.select("rect[id='horizontal']")
+            .attr("width", Math.min(cx, width));
+        transformedBackground.select("rect[id='vertical']")
+            .attr("height", Math.min(cy, height));
     }
 
     getSlider() {
