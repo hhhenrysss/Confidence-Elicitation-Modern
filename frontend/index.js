@@ -3,8 +3,8 @@ import {SurveyResults} from "./storage/store";
 import {FrontPage} from "./components/frontPage";
 
 import './assets/styles/style.css';
-import {BankPage} from "./components/bankPage";
 import {reload} from "./utils";
+import {BankPage} from "./components/bankPage";
 
 class Survey {
     constructor() {

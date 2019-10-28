@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
 
 const {participantsList} = require('./configurations');
 const {NextIDResponse, UploadResponse, ValidIDResponse} = require('../types/responseType');
@@ -10,6 +11,7 @@ const {UploadRequest} = require("../types/requestType");
 
 const app = new express();
 
+app.use(helmet());
 app.use(cookieParser('confidence elicitation modern repo'));
 app.use(express.static(path.resolve(__dirname, '../frontend/dist')));
 
@@ -66,4 +68,4 @@ app.post('/new-response', jsonParser, (req, res) => {
         });
 });
 
-app.listen('8000');
+app.listen('8000', '0.0.0.0');

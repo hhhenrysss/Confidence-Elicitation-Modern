@@ -7,8 +7,8 @@
     "obfuscate": "cd frontend/assets/questions && node obfuscateQuestions.js && cd ../../..",
     "build": "npm run obfuscate && webpack --config webpack.prod.config.js --display-error-details",
     "watch-build": "npm run obfuscate && webpack --config webpack.dev.config.js --watch --display-error-details",
-    "serve": "node backend/index.js",
-    "watch-serve": "nodemon --watch backend backend/index.js"
+    "serve": "node backend/app.js",
+    "watch-serve": "nodemon --watch backend backend/app.js"
   },
   "author": "Hang",
   "license": "ISC",
@@ -32,6 +32,7 @@
     "d3": "^3.5.17",
     "easytimer.js": "^4.0.1",
     "express": "^4.17.1",
+    "helmet": "^3.21.2",
     "jquery": "^3.4.1",
     "jquery-ui": "^1.12.1",
     "sjcl": "^1.0.8"

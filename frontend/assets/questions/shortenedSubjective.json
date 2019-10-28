@@ -2,4 +2,44 @@
   "question": "Is our moon larger than Jupiter's moon Europa?",
   "index": 0,
   "answer": "Yes"
+}, {
+  "question": "Does Canada have a greater land area than the U.S.?",
+  "index": 1,
+  "answer": "Yes"
+}, {
+  "question": "According the the 2010 U.S. Census, were there more men than women living in the United States?",
+  "index": 2,
+  "answer": "No"
+}, {
+  "question": "According the the 2010 U.S. Census, were there more people under the age of 18 than 25-44?",
+  "index": 3,
+  "answer": "No"
+}, {
+  "question": "Is the tallest building in the world located in Dubai?",
+  "index": 4,
+  "answer": "Yes"
+}, {
+  "question": "Is Lake Victoria in Kenya the largest lake in the world?",
+  "index": 5,
+  "answer": "No"
+}, {
+  "question": "Is the Nile River the longest river in the world?",
+  "index": 6,
+  "answer": "No"
+}, {
+  "question": "Was the United States the first country to successfully land a man on the moon?",
+  "index": 7,
+  "answer": "Yes"
+}, {
+  "question": "Is Puerto Rico its own independent nation?",
+  "index": 8,
+  "answer": "No"
+}, {
+  "question": "Was the Soviet Union one of the Axis powers during World War II?",
+  "index": 9,
+  "answer": "No"
+}, {
+  "question": "Was Massachusetts the first state formed in the United States?",
+  "index": 10,
+  "answer": "No"
 }]
