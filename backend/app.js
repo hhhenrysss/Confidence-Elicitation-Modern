@@ -68,4 +68,8 @@ app.post('/new-response', jsonParser, (req, res) => {
         });
 });
 
-app.listen('8000', '0.0.0.0');
+if (require.main === module) {
+    app.listen('8000', '0.0.0.0');
+}
+
+module.exports.start = () => app.listen('8000', '0.0.0.0');
