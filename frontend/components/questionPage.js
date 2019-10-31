@@ -3,7 +3,7 @@ import {createOption, createQuestionTitle, createSectionTitle} from "./miscObjec
 import {GroupTypeUtils, Response} from "../storage/store";
 import {LinearSlider, ParabolicSlider} from "./graphObject";
 import {EndPage} from "./endPage";
-import {RandomizedQuestions} from "../assets/questions/shuffleQuestions";
+import {Questions} from "../assets/questions/decryptQuestions";
 import {Config} from "../configurations";
 import {BankPage} from "./bankPage";
 import {Time} from "../utils";
@@ -41,7 +41,7 @@ export class QuestionPage extends BasePage {
         return `Question ${idx}`;
     }
     render() {
-        const currentQuestion = RandomizedQuestions[this.currentIndex];
+        const currentQuestion = Questions[this.currentIndex];
         this.sectionTitle.html(this.generateSectionTitle(this.currentIndex + 1));
         this.questionTitle.html(currentQuestion.question);
 
@@ -65,7 +65,7 @@ export class QuestionPage extends BasePage {
     }
 
     record() {
-        const question = RandomizedQuestions[this.currentIndex];
+        const question = Questions[this.currentIndex];
         const currentTime = Time.currentTime();
         const response = new Response(
             question.index,
@@ -83,7 +83,7 @@ export class QuestionPage extends BasePage {
     }
 
     nextElement() {
-        if (this.currentIndex === RandomizedQuestions.length - 1) {
+        if (this.currentIndex === Questions.length - 1) {
             super.clearPage();
             return new EndPage(this.elements, this.data);
         } else if ((this.currentIndex + 1) % Config.breakInterval === 0) {

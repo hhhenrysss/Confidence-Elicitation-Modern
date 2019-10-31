@@ -3,7 +3,7 @@ import $ from "jquery";
 import {Timer} from 'easytimer.js';
 import {BasePage} from "./baseObject";
 import {Config} from "../configurations";
-import {RandomizedQuestions} from "../assets/questions/shuffleQuestions";
+import {Questions} from "../assets/questions/decryptQuestions";
 import {EndPage} from "./endPage";
 import {QuestionPage} from "./questionPage";
 import {GroupTypeUtils} from "../storage/store";
@@ -221,7 +221,7 @@ export class BankPage extends BasePage {
 
     nextElement() {
         super.clearPage();
-        if (this.lastIndex === RandomizedQuestions.length - 1) {
+        if (this.lastIndex === Questions.length - 1) {
             return new EndPage(this.elements, this.data);
         } else {
             return new QuestionPage(this.elements, this.data, this.lastIndex + 1);

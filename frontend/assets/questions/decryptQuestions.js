@@ -10,4 +10,4 @@ function Shuffle(arr) {
 }
 
 const decrypted = sjcl.decrypt('Confidence Elicitation', EncryptedQuestions);
-export const RandomizedQuestions = JSON.parse(decrypted);
+export const Questions = JSON.parse(decrypted);
