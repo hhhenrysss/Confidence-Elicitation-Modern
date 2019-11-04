@@ -70,13 +70,22 @@ class BannerElement {
         const main = $(`<div class="banner-main-text">${mainText}</div>`);
 
         wrapper.append(main);
-        if (confirmText != null && closeText != null && confirmHandler != null) {
-            const actionsWrapper = $('<div class="banner-actions-wrapper"></div>');
+        const actionsWrapper = $('<div class="banner-actions-wrapper"></div>');
+        let isPopulated = false;
+        if (confirmText != null && confirmHandler != null) {
+            isPopulated = true;
             const confirmAction = $(`<button class="banner-action-button">${confirmText}</button>`);
-            const closeAction = $(`<button class="banner-action-button">${closeText}</button>`);
             confirmAction.click(() => confirmHandler());
+            actionsWrapper.append(confirmAction);
+        }
+        if (closeText != null) {
+            isPopulated = true;
+            const closeAction = $(`<button class="banner-action-button">${closeText}</button>`);
             closeAction.click(() => wrapper.remove());
-            wrapper.append(actionsWrapper.append(confirmAction).append(closeAction));
+            actionsWrapper.append(closeAction);
+        }
+        if (isPopulated) {
+            wrapper.append(actionsWrapper);
         }
         this.element = wrapper;
     }

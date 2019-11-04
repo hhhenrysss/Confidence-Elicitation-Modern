@@ -4,6 +4,7 @@ const path = require('path');
 const {promisify} = require('util');
 
 const stat = promisify(fs.stat);
+const readAddr = promisify(fs.readdir);
 const writeFile = promisify(fs.writeFile);
 
 const cookieKey = 'participant';
@@ -48,10 +49,26 @@ module.exports.isFileExist = function isFileExist(filePath) {
     return stat(filePath).then(() => true).catch(() => false);
 };
 
+module.exports.allDataFiles = function allDataFiles(folderPath) {
+    return readAddr(folderPath);
+};
+
+module.exports.generateFileNameFromParticipant = function generateFileName(participant) {
+    return [participant.participantId, participant.group].join('') + '.json';
+};
+
+module.exports.generateFileNameFromReq = function generateFileName(req) {
+    return module.exports.cookieUtils.getIndexAndGroup(req).join('') + '.json';
+};
+
+module.exports.generateDataFolderPath = function generateDataFolderPath() {
+    return path.resolve(__dirname, './data/');
+};
+
 module.exports.storeFile = function storeFile(requestedData, req) {
     const errorMsg = {errorMsg: null, isFileExist: false};
-    const fileName = module.exports.cookieUtils.getIndexAndGroup(req).join('') + '.json';
-    const completePath = path.resolve(__dirname, './data/' + fileName);
+    const fileName = module.exports.generateFileNameFromReq(req);
+    const completePath = path.resolve(module.exports.generateDataFolderPath(), fileName);
     return stat(completePath).then(() => {
         errorMsg.errorMsg = 'File with the same participant ID and group exist. Cannot store the file remotely.';
         errorMsg.isFileExist = true;

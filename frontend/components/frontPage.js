@@ -43,12 +43,9 @@ export class FrontPage extends BasePage{
                 if (data.errorMsg != null) {
                     const bannerElem = createBanner(
                         data.errorMsg,
-                        `Start New`,
+                        null,
                         `Dismiss`,
-                        () => {
-                            // refresh page
-                            reload();
-                        }
+                        null
                     );
                     bannerElem.addRed();
                     elements.textElem.prepend(bannerElem.jQueryObj);
