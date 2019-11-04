@@ -6,8 +6,9 @@ module.exports.NextIDResponse = class NextIDResponse {
 };
 
 module.exports.ValidIDResponse = class ValidIDResponse {
-    constructor(isValid) {
+    constructor(isValid, errorMsg = null) {
         this.isValid = isValid;
+        this.errorMsg = errorMsg;
     }
 };
 

@@ -12,6 +12,11 @@ export class QuestionPage extends BasePage {
     constructor(elements, data, currentIndex = 0) {
         super(elements);
 
+        // import(/* webpackChunkName: "questions" */ './fireworks/fireworks.index').
+        // then((YOPFFireworks) => {
+        //     fireworks = new YOPFFireworks.default(document.getElementById('phrase-fireworks-wrapper'));
+        //     resolve(fireworks.doFireworks(phrase));
+        // });
         this.graph = null;
         this.sectionTitle = createSectionTitle('');
         this.questionTitle = createQuestionTitle('');

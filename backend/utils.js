@@ -65,10 +65,14 @@ module.exports.generateDataFolderPath = function generateDataFolderPath() {
     return path.resolve(__dirname, './data/');
 };
 
+module.exports.generateFilePath = function generateFilePath(fileName) {
+    return path.resolve(module.exports.generateDataFolderPath(), fileName);
+};
+
 module.exports.storeFile = function storeFile(requestedData, req) {
     const errorMsg = {errorMsg: null, isFileExist: false};
     const fileName = module.exports.generateFileNameFromReq(req);
-    const completePath = path.resolve(module.exports.generateDataFolderPath(), fileName);
+    const completePath = module.exports.generateFilePath(fileName);
     return stat(completePath).then(() => {
         errorMsg.errorMsg = 'File with the same participant ID and group exist. Cannot store the file remotely.';
         errorMsg.isFileExist = true;

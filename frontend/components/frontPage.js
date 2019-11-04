@@ -76,12 +76,23 @@ export class FrontPage extends BasePage{
         const inputText = this.inputElem.val();
         const groupValue = this.options.value;
         if (inputText !== '' && GroupTypeUtils.isGroupType(groupValue)) {
-            this.subjectID = inputText;
-            this.groupSelectResult = groupValue;
-            super.hideErrorMessage();
-            return true;
+            return axios.get('/validate-id', {
+                params: {participantId: inputText, group: groupValue}
+            }).then(res => {
+                const result = res.data;
+                if (result.isValid) {
+                    this.subjectID = inputText;
+                    this.groupSelectResult = groupValue;
+                    super.hideErrorMessage();
+                    return true;
+                } else {
+                    super.addErrorMessage(result.errorMsg);
+                    return false;
+                }
+            });
+
         }
-        super.addErrorMessage('Please select a value before continue');
+        super.addErrorMessage('Please input correct value(s) before continue');
         return false;
     }
 

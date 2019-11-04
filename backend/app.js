@@ -7,7 +7,8 @@ const helmet = require('helmet');
 const {participantsList} = require('./configurations');
 const {NextIDResponse, UploadResponse, ValidIDResponse} = require('../types/responseType');
 const {generateDataFolderPath, allDataFiles, cookieUtils,
-    isFileExist, isIDExist, storeFile, generateFileNameFromParticipant} = require("./utils");
+    isFileExist, storeFile, generateFileNameFromParticipant,
+    generateFilePath} = require("./utils");
 const {UploadRequest} = require("../types/requestType");
 
 const app = new express();
@@ -72,12 +73,15 @@ app.get('/next-id', (req, res) => {
 });
 
 app.get('/validate-id', (req, res) => {
-    const [str, group] = cookieUtils.getIndexAndGroup(req);
-    return isFileExist().then(() => {
-        return res.json(new ValidIDResponse(false, 'File already exists'));
+    if (req.query.participantId == null || req.query.group == null) {
+        return res.json(new ValidIDResponse(false, 'Invalid parameter'));
+    }
+    const fileName = generateFileNameFromParticipant(req.query);
+    const filePath = generateFilePath(fileName);
+    return isFileExist(filePath).then(() => {
+        return res.json(new ValidIDResponse(false, 'Data file for this participant already exists'));
     }).catch(() => {
-        const result = isIDExist(str, group);
-        const response = new ValidIDResponse(result, result === true ? null : 'ID does not exist');
+        const response = new ValidIDResponse(true, null);
         return res.json(response);
     });
 });
