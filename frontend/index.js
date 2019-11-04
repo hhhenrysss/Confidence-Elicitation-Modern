@@ -1,10 +1,9 @@
 import $ from "jquery";
 import {SurveyResults} from "./storage/store";
-import {FrontPage} from "./components/frontPage";
 
 import './assets/styles/style.css';
 import {reload} from "./utils";
-import {BankPage} from "./components/bankPage";
+// import {BankPage} from "./components/bankPage";
 
 class Survey {
     constructor() {
@@ -27,24 +26,31 @@ class Survey {
         // });
         // new BankPage(this.elems, this.results, 0);
         let isFirstPage = true;
-        let currentPage = new FrontPage(this.elems, this.results);
-        const body = $('html, body');
-        this.elems.buttonElem.click(() => {
-            Promise.resolve(currentPage.canProceed()).then(canProceed => {
-                if (canProceed) {
-                    if (isFirstPage) {
-                        window.onbeforeunload = () => "Your previous answers will be lost";
-                        isFirstPage = false;
+        // import {FrontPage} from "./components/frontPage";
+        // let currentPage = new FrontPage(this.elems, this.results);
+        import(/* webpackChunkName: "FrontPage" */ "./components/frontPage").then(c => {
+            let currentPage = new c.FrontPage(this.elems, this.results);
+            const body = $('html, body');
+            this.elems.buttonElem.click(() => {
+                Promise.resolve(currentPage.canProceed()).then(canProceed => {
+                    if (canProceed) {
+                        if (isFirstPage) {
+                            window.onbeforeunload = () => "Your previous answers will be lost";
+                            isFirstPage = false;
+                        }
+                        currentPage.record();
+                        Promise.resolve(currentPage.nextElement()).then(nextElement => {
+                            currentPage = nextElement;
+                            body.animate({scrollTop: 0}, 200);
+                        });
                     }
-                    currentPage.record();
-                    currentPage = currentPage.nextElement();
-                    body.animate({scrollTop: 0}, 200);
-                }
-                if (currentPage == null) {
-                    reload();
-                }
+                    if (currentPage == null) {
+                        reload();
+                    }
+                });
             });
         });
+
     }
 }
 

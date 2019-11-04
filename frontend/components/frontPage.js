@@ -3,7 +3,6 @@ import axios from 'axios';
 import {BasePage} from "./baseObject";
 import {createBanner, createExplanation, createOption, createQuestionTitle, createSectionTitle} from "./miscObjects";
 import {groupType, GroupTypeUtils} from "../storage/store";
-import {StartPage} from "./startPage";
 
 import '../assets/styles/banner_style.css';
 import {reload} from "../utils";
@@ -104,6 +103,8 @@ export class FrontPage extends BasePage{
 
     nextElement() {
         super.clearPage();
-        return new StartPage(this.elements, this.data);
+        // import {StartPage} from "./startPage";
+        // return new StartPage(this.elements, this.data);
+        return import(/* webpackChunkName: "StartPage" */ "./startPage").then(c => new c.StartPage(this.elements, this.data));
     }
 }

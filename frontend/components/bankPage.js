@@ -4,8 +4,6 @@ import {Timer} from 'easytimer.js';
 import {BasePage} from "./baseObject";
 import {Config} from "../configurations";
 import {Questions} from "../assets/questions/decryptQuestions";
-import {EndPage} from "./endPage";
-import {QuestionPage} from "./questionPage";
 import {GroupTypeUtils} from "../storage/store";
 import {createExplanation, createQuestionTitle, createSectionTitle} from "./miscObjects";
 
@@ -222,9 +220,13 @@ export class BankPage extends BasePage {
     nextElement() {
         super.clearPage();
         if (this.lastIndex === Questions.length - 1) {
-            return new EndPage(this.elements, this.data);
+            // import {EndPage} from "./endPage";
+            // return new EndPage(this.elements, this.data);
+            return import(/* webpackChunkName: "EndPage" */ "./endPage").then(c => new c.EndPage(this.elements, this.data));
         } else {
-            return new QuestionPage(this.elements, this.data, this.lastIndex + 1);
+            // import {QuestionPage} from "./questionPage";
+            // return new QuestionPage(this.elements, this.data, this.lastIndex + 1);
+            return import(/* webpackChunkName: "QuestionPage" */ "./questionPage").then(c => new c.QuestionPage(this.elements, this.data, this.lastIndex + 1));
         }
     }
 }

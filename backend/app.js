@@ -78,11 +78,8 @@ app.get('/validate-id', (req, res) => {
     }
     const fileName = generateFileNameFromParticipant(req.query);
     const filePath = generateFilePath(fileName);
-    return isFileExist(filePath).then(() => {
-        return res.json(new ValidIDResponse(false, 'Data file for this participant already exists'));
-    }).catch(() => {
-        const response = new ValidIDResponse(true, null);
-        return res.json(response);
+    return isFileExist(filePath).then(exist => {
+        return res.json(new ValidIDResponse(!exist, !exist ? null:'Data file for this participant already exists'));
     });
 });
 

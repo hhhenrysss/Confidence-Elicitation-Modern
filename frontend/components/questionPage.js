@@ -2,21 +2,14 @@ import {BasePage} from "./baseObject";
 import {createOption, createQuestionTitle, createSectionTitle} from "./miscObjects";
 import {GroupTypeUtils, Response} from "../storage/store";
 import {LinearSlider, ParabolicSlider} from "./graphObject";
-import {EndPage} from "./endPage";
 import {Questions} from "../assets/questions/decryptQuestions";
 import {Config} from "../configurations";
-import {BankPage} from "./bankPage";
 import {Time} from "../utils";
 
 export class QuestionPage extends BasePage {
     constructor(elements, data, currentIndex = 0) {
         super(elements);
 
-        // import(/* webpackChunkName: "questions" */ './fireworks/fireworks.index').
-        // then((YOPFFireworks) => {
-        //     fireworks = new YOPFFireworks.default(document.getElementById('phrase-fireworks-wrapper'));
-        //     resolve(fireworks.doFireworks(phrase));
-        // });
         this.graph = null;
         this.sectionTitle = createSectionTitle('');
         this.questionTitle = createQuestionTitle('');
@@ -90,10 +83,14 @@ export class QuestionPage extends BasePage {
     nextElement() {
         if (this.currentIndex === Questions.length - 1) {
             super.clearPage();
-            return new EndPage(this.elements, this.data);
+            // import {EndPage} from "./endPage";
+            // return new EndPage(this.elements, this.data);
+            return import(/* webpackChunkName: "EndPage" */ "./EndPage").then(c => new c.EndPage(this.elements, this.data));
         } else if ((this.currentIndex + 1) % Config.breakInterval === 0) {
             super.clearPage();
-            return new BankPage(this.elements, this.data, this.currentIndex);
+            // import {BankPage} from "./bankPage";
+            // return new BankPage(this.elements, this.data, this.currentIndex);
+            return import(/* webpackChunkName: "BankPage" */ "./bankPage").then(c => new c.BankPage(this.elements, this.data, this.currentIndex));
         } else {
             this.currentIndex += 1;
             this.clearAll();

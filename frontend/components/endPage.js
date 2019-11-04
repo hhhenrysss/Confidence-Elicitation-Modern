@@ -45,7 +45,7 @@ export class EndPage extends BasePage {
                 return false;
             });
         } else {
-            return Promise.resolve(true);
+            return true;
         }
     }
     record() {}

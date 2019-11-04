@@ -1,6 +1,5 @@
 import {BasePage} from "./baseObject";
 import {createExplanation, createSectionTitle} from "./miscObjects";
-import {TutorialPage} from "./tutorialPage";
 import {IntroductionStatements} from "../assets/questions/introductionStatements";
 
 export class StartPage extends BasePage {
@@ -22,6 +21,8 @@ export class StartPage extends BasePage {
     record() {}
     nextElement() {
         super.clearPage();
-        return new TutorialPage(this.elements, this.data);
+        // import {TutorialPage} from "./tutorialPage";
+        // return new TutorialPage(this.elements, this.data);
+        return import(/* webpackChunkName: "TutorialPage" */ "./tutorialPage").then(c => new c.TutorialPage(this.elements, this.data));
     }
 }

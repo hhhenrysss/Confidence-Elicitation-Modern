@@ -3,7 +3,6 @@ import {createBanner, createExplanation, createOption, createQuestionTitle, crea
 import {GroupTypeUtils, Response} from "../storage/store";
 import {TutorialQuestions} from "../assets/questions/tutorialQuestions";
 import {LinearSlider, ParabolicSlider} from "./graphObject";
-import {QuestionPage} from "./questionPage";
 import {Time} from "../utils";
 
 export class TutorialPage extends BasePage{
@@ -85,7 +84,9 @@ export class TutorialPage extends BasePage{
     nextElement() {
         if (this.currentContentIndex === TutorialQuestions.length - 1) {
             super.clearPage();
-            return new QuestionPage(this.elements, this.data);
+            // import {QuestionPage} from "./questionPage";
+            // return new QuestionPage(this.elements, this.data);
+            return import(/* webpackChunkName: "QuestionPage" */ "./questionPage").then(c => new c.QuestionPage(this.elements, this.data));
         } else {
             this.currentContentIndex += 1;
             this.clearAll();
