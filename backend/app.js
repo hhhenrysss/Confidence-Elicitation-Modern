@@ -49,13 +49,12 @@ app.get('/next-id', (req, res) => {
                 if (secondLoop === true) {
                     break;
                 }
-            } else {
-                const candidate = participantsList[i];
-                let fileName = generateFileNameFromParticipant(candidate);
-                if (!fileSet.has(fileName)) {
-                    cookieUtils.createCookie(candidate, res);
-                    return res.json(new NextIDResponse(candidate, null));
-                }
+            }
+            const candidate = participantsList[i];
+            let fileName = generateFileNameFromParticipant(candidate);
+            if (!fileSet.has(fileName)) {
+                cookieUtils.createCookie(candidate, res);
+                return res.json(new NextIDResponse(candidate, null));
             }
             if (i === participantsList.length - 1) {
                 i = -1;
