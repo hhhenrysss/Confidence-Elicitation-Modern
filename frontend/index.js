@@ -42,10 +42,10 @@ class Survey {
                         Promise.resolve(currentPage.nextElement()).then(nextElement => {
                             currentPage = nextElement;
                             body.animate({scrollTop: 0}, 200);
+                            if (currentPage == null) {
+                                reload();
+                            }
                         });
-                    }
-                    if (currentPage == null) {
-                        reload();
                     }
                 });
             });
